@@ -1,5 +1,7 @@
 import { Page } from "playwright/test";
 import { BasePage } from "./base-page";
+import { expect } from "../support/hooks";
+import { GlobalData } from "../support/global-data";
 
 export class DriversPage extends BasePage {
 
@@ -16,22 +18,26 @@ export class DriversPage extends BasePage {
     protected relationshipToInsured = this.page.locator('//label[text()="Relationship to Insured"]//following-sibling::select');
     protected saveDriverButton = this.page.getByRole('button', { name: 'Save Driver' });
     protected nextButton = this.page.getByRole('button', { name: 'Next →' });
-  
+    protected pageName = this.page.locator('div[class=panel-header]').first();
+
     constructor(page: Page) {
         super(page);
         
     }
 
     async fillOutPage(autoGraystoneData: any) {
+        console.log(`filling out the ${GlobalData.currentPage()} page....`);
         // Adding drivers details
         await this.fillDriverDetails(autoGraystoneData);
+        console.log(`'${GlobalData.currentPage()} page filled successfully...`);
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
-        console.log('user is on the Drivers Page...');
         await this.fillOutPage(autoGraystoneData);
         await this.safeClick(this.nextButton);
         console.log('Navigating to next page...');
+        await expect(this.pageName).toContainText('Vehicles');
+        GlobalData.setCurrentPage('Vehicles');
     }
 
     async fillDriverDetails(autoGraystoneData: any) {

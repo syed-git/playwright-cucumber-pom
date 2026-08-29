@@ -1,6 +1,7 @@
 import { Page } from "playwright/test";
 import { BasePage } from "./base-page";
 import { GlobalData } from "../support/global-data";
+import { expect } from "../support/hooks";
 
 export class PolicyInfoPage extends BasePage {
 
@@ -20,13 +21,14 @@ export class PolicyInfoPage extends BasePage {
     protected primaryInsured = this.page.locator('//label[text()="Primary Insured"]//following-sibling::select');
     protected saveInsuredButton = this.page.getByRole('button', { name: 'Save Insured' });
     protected nextButton = this.page.getByRole('button', { name: 'Next →' });
-  
+    protected pageName = this.page.locator('div[class=panel-header]').first();
+
     constructor(page: Page) {
         super(page);
     }
 
   async fillOutPage(autoGraystoneData: any) {
-
+    console.log(`filling out the ${GlobalData.currentPage()} page....`);
     // store the policy number
     const text = await this.submissionNumber.innerText();
     const match = text.match(/PA-\d+/);
@@ -38,13 +40,16 @@ export class PolicyInfoPage extends BasePage {
 
     // fill out Insured details
     await this.fillInsuredDetails(autoGraystoneData);
+    console.log(`'${GlobalData.currentPage()} page filled successfully...`);
   }
 
   async fillOutPageAndContinue(autoGraystoneData: any) {
-    console.log('user is on T=the POlicy Infor page..');
     await this.fillOutPage(autoGraystoneData);
     await this.safeClick(this.nextButton);
-    console.log('navigating to next page...')
+    console.log('navigating to next page...');
+    await expect(this.pageName, 'page name is not expected').toContainText('Drivers');
+    console.log('user is on the Drivers page....');
+    GlobalData.setCurrentPage('Drivers');
   }
 
   async fillEffectiveDate(effectiveDate: string) {

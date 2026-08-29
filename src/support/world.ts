@@ -7,6 +7,7 @@ export class CustomWorld extends World {
   page!: Page;
   environment!: string;
   data: any = {};
+  currentPage!: string;
 
   constructor(options: IWorldOptions) {
     super(options);

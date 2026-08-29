@@ -30,7 +30,7 @@ Before(async function (this: CustomWorld) {
 
   this.context = await this.browser.newContext({
     ignoreHTTPSErrors: true,
-    viewport: { width: 1920, height: 1080 },
+    viewport: { width: 1080, height: 720 },
   });
   // Floating overlays (e.g. the Netlify badge iframe) sit on top of the page and
   // intercept pointer events after Playwright auto-scrolls an element into view.

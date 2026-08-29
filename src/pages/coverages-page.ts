@@ -1,17 +1,22 @@
 import { Page } from "playwright/test";
 import { BasePage } from "./base-page";
+import { expect } from "../support/hooks";
+import { GlobalData } from "../support/global-data";
 
 export class CoveragesPage extends BasePage {
 
     protected coverageCheckbox = (name: string) => this.page.locator(`//strong[text()="${name}"]//parent::td//preceding-sibling::td//input`);
     protected coverageLimit = (name: string) => this.page.locator(`//strong[text()="${name}"]/parent::td//following-sibling::td//select`);
     protected generaQuote = this.page.getByRole('button', { name: 'Generate Quote' });
-  
+    protected quoteSumary = this.page.getByRole('heading', {name: 'Quote Summary'});
+
     constructor(page: Page) {
         super(page);
     }
 
     async fillOutPage(autoGraystoneData: any) {
+        
+        console.log(`filling out ${GlobalData.currentPage()} page...`);
         await this.fillBodilyInjury(autoGraystoneData);
         await this.fillPropertyDamage(autoGraystoneData);
         await this.fillUninsuredMotorist(autoGraystoneData);
@@ -20,15 +25,15 @@ export class CoveragesPage extends BasePage {
         await this.fillCollision(autoGraystoneData);
         await this.fillRentalReimbursement(autoGraystoneData);
         await this.fillRoadSideAssistance(autoGraystoneData);
-        console.log('All coverages have been selected....')
-        
+        console.log(`'${GlobalData.currentPage()} page filled successfully...`);
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
-        console.log('user is on Coverages page...');
         await this.fillOutPage(autoGraystoneData);
         await this.generaQuote.click();
         console.log('Navigating to next page...');
+        await expect(this.quoteSumary).toContainText('Quote Summary');
+        GlobalData.setCurrentPage('Quote');
     }
 
            

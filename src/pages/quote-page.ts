@@ -1,13 +1,15 @@
 import { Page } from "playwright/test";
 import { BasePage } from "./base-page";
 import { expect } from "../support/hooks";
+import { GlobalData } from "../support/global-data";
 
 export class QuotePage extends BasePage {
 
     protected entity = (name: string) => this.page.locator(`//div[text()="${name}"]//following-sibling::div`).last();
     protected totalPremium = this.page.locator(`div[class=amount]`);
     protected reviewButton = this.page.getByRole('button', { name:'Review Details →' });
-    
+    protected reviewAllDetails = this.page.getByText('Review all submission details below before proceeding to risk analysis.');
+
     constructor(page: Page) {
         super(page);
     }
@@ -29,11 +31,12 @@ export class QuotePage extends BasePage {
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
-        console.log('user is on Quote page...');
         await this.fillOutPage(autoGraystoneData);
         await this.safeClick(this.reviewButton);
         console.log('Navigating to next page...');
+        await expect(this.reviewAllDetails).toContainText('Review all submission details');
+        console.log('user is on Review page...');
+        GlobalData.setCurrentPage('Review');
     }
-
     
 }

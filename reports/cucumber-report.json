@@ -1,0 +1,131 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "create-new-policy;create-a-current-dated-new-policy-3-vehicles",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Create a current dated new policy 3 vehicles",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 2768563700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "user sets 'numberOfVehicles' to '3'",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47386399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "user requests the graystoneData",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:38"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 44390400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "'accountExecutive' logs in to policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2702731600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "user initiates a new submission",
+            "match": {
+              "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 314431199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "user navigates from 'Policy Info' to 'View Full Policy' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9610526500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "user logs out from policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 114490699
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1008900
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@NewSubmission",
+            "line": 3
+          },
+          {
+            "name": "@CurrentDate",
+            "line": 3
+          },
+          {
+            "name": "@regression",
+            "line": 3
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "create-new-policy",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Create new policy",
+    "tags": [],
+    "uri": "src\\features\\regression\\new-submission-regression.feature"
+  }
+]

@@ -4,6 +4,7 @@
 export class GlobalData {
   private static data: Record<string, any> = {};
   private static policyNumber: string = '';
+  private static currentPageName: string = '';
 
   /**
    * Set the entire data object.
@@ -25,12 +26,28 @@ export class GlobalData {
   static setPolicyNumber(policyNumber: string) {
     GlobalData.policyNumber = policyNumber;
   }
+  
 
   /**
    * Get the policy number.
    */
   static getPolicyNumber(): string {
     return GlobalData.policyNumber;
+  }
+
+  /**
+   * Set the current page name
+   */
+  static setCurrentPage(pageName: string) {
+    GlobalData.currentPageName = pageName;
+  }
+  
+
+  /**
+   * Get the current page name.
+   */
+  static currentPage(): string {
+    return GlobalData.currentPageName;
   }
 
   /**

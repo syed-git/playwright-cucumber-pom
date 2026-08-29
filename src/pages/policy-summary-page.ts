@@ -1,13 +1,14 @@
 import { Page } from "playwright/test";
 import { BasePage } from "./base-page";
 import { GlobalData } from "../support/global-data";
+import { expect } from "../support/hooks";
 
 export class PolicySummaryPage extends BasePage {
 
     protected viewFullPolicy = this.page.getByRole('button', { name: 'View Full Policy'});
     protected entity = (name: string) => this.page.locator(`//div[text()="${name}"]//following-sibling::div`).last();
     protected totalPremium = this.page.locator(`div[class=amount]`);
-
+    protected transactionText = this.page.getByRole('heading', { name: 'Transaction History'});
     constructor(page: Page) {
         super(page);
     }
@@ -26,10 +27,11 @@ export class PolicySummaryPage extends BasePage {
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
-        console.log('user is on Policy Summary page...');
         await this.fillOutPage(autoGraystoneData);
         await this.safeClick(this.viewFullPolicy);
         console.log('Navigating to next page...');
+        await expect(this.transactionText).toBeVisible();
+        GlobalData.setCurrentPage('View Full Policy');
     }
     
 }
