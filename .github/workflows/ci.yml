@@ -36,7 +36,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run @build scenarios
-        run: npm run test -- --tags "@build"
+        run: npm run test -- --tags "@build" --paralle 3
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4

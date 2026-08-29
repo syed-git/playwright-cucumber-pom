@@ -14,7 +14,7 @@ export class RsikAnalysisPage extends BasePage {
     async fillOutPage(_autoGraystoneData: any) {
         // isVisible() returns immediately; give the page a moment to render the issue banner
         const hasUnderwritingIssue = await this.underwritingIssue
-            .waitFor({ state: "visible", timeout: 10000 })
+            .waitFor({ state: "visible", timeout: 5000 })
             .then(() => true)
             .catch(() => false);
         if (hasUnderwritingIssue) {
