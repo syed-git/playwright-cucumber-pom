@@ -161,21 +161,16 @@ function renderStep(step: Step): string {
   const textsHtml = texts.length
     ? `<div class="step-logs"><div class="logs-title">Attachments</div><pre>${escapeHtml(texts.join("\n"))}</pre></div>`
     : "";
-  const imagesHtml = images.length
-    ? `<div class="step-gallery"><div class="logs-title">Screenshots (${images.length})</div><div class="thumbs">${images
-        .map(
-          (img) =>
-            `<figure class="thumb" onclick="openLightbox(this)" data-caption="${escapeHtml(img.caption)}">` +
-            `<img src="${img.src}" alt="${escapeHtml(img.caption)}" loading="lazy"/>` +
-            `<figcaption>${escapeHtml(img.caption)}</figcaption></figure>`
-        )
-        .join("")}</div></div>`
+  const inlineGalleryHtml = images.length
+    ? `<span class="inline-gallery${images.length > 1 ? " multi" : ""}" title="${images.length} screenshot${images.length > 1 ? "s" : ""}" onclick="event.stopPropagation(); openLightbox(this)">${images
+        .map((img, i) => `<img class="inline-thumb${i > 0 ? " extra" : ""}" src="${img.src}" alt="${escapeHtml(img.caption)}" data-caption="${escapeHtml(img.caption)}" loading="lazy"/>`)
+        .join("")}${images.length > 1 ? `<span class="shot-count">+${images.length - 1}</span>` : ""}</span>`
     : "";
   const errorHtml = step.result?.error_message
     ? `<div class="step-error"><div class="logs-title">Error</div><pre>${escapeHtml(step.result.error_message)}</pre></div>`
     : "";
 
-  const hasDetails = logsHtml || textsHtml || imagesHtml || errorHtml;
+  const hasDetails = logsHtml || textsHtml || errorHtml;
 
   return `
     <div class="step ${status}">
@@ -183,9 +178,10 @@ function renderStep(step: Step): string {
         <span class="step-status ${status}">${statusIcon(status)}</span>
         <span class="step-name">${escapeHtml(name)}</span>
         ${hasDetails ? '<span class="chevron">▾</span>' : ""}
+        ${inlineGalleryHtml}
         <span class="step-duration">${duration}</span>
       </div>
-      ${hasDetails ? `<div class="step-details">${errorHtml}${logsHtml}${textsHtml}${imagesHtml}</div>` : ""}
+      ${hasDetails ? `<div class="step-details">${errorHtml}${logsHtml}${textsHtml}</div>` : ""}
     </div>`;
 }
 
@@ -335,12 +331,12 @@ function buildHtml(features: Feature[]): string {
   .step-logs pre, .step-error pre { background: #0b101c; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12.5px; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; word-break: break-word; color: #b9c4da; font-family: 'Cascadia Code', Consolas, monospace; }
   .step-error pre { border-color: rgba(248,113,113,.4); color: #fca5a5; }
   .step-logs, .step-error { margin-bottom: 10px; }
-  .step-gallery { margin-bottom: 10px; }
-  .thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
-  .thumb { width: 160px; cursor: zoom-in; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform .15s, border-color .15s; }
-  .thumb:hover { transform: scale(1.03); border-color: var(--blue); }
-  .thumb img { width: 100%; height: 100px; object-fit: cover; object-position: top; display: block; }
-  .thumb figcaption { font-size: 11px; color: var(--muted); padding: 5px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .inline-gallery { position: relative; display: inline-flex; align-items: center; cursor: zoom-in; flex-shrink: 0; }
+  .inline-thumb { width: 48px; height: 30px; object-fit: cover; object-position: top; border: 1px solid var(--border); border-radius: 5px; display: block; transition: transform .15s, border-color .15s; background: #fff; }
+  .inline-gallery:hover .inline-thumb { transform: scale(1.08); border-color: var(--blue); }
+  .inline-thumb.extra { display: none; }
+  .inline-gallery.multi .inline-thumb:first-child { box-shadow: 3px 3px 0 -1px var(--surface2), 3px 3px 0 0 var(--border); }
+  .shot-count { position: absolute; right: -7px; top: -7px; background: var(--blue); color: #0b1020; font-size: 10px; font-weight: 700; border-radius: 999px; padding: 1px 5px; pointer-events: none; }
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(5,8,16,.92); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; }
   .lightbox.open { display: flex; }
   .lightbox img { max-width: 92vw; max-height: 80vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,.6); }
@@ -417,12 +413,12 @@ function buildHtml(features: Feature[]): string {
   <script>
     var lbGroup = [];
     var lbIndex = 0;
-    function openLightbox(thumb) {
-      var thumbs = Array.prototype.slice.call(thumb.parentElement.querySelectorAll('.thumb'));
-      lbGroup = thumbs.map(function (t) {
-        return { src: t.querySelector('img').src, caption: t.getAttribute('data-caption') || '' };
+    function openLightbox(gallery) {
+      var imgs = Array.prototype.slice.call(gallery.querySelectorAll('img'));
+      lbGroup = imgs.map(function (img) {
+        return { src: img.src, caption: img.getAttribute('data-caption') || '' };
       });
-      lbIndex = thumbs.indexOf(thumb);
+      lbIndex = 0;
       renderLightbox();
       document.getElementById('lightbox').classList.add('open');
     }
