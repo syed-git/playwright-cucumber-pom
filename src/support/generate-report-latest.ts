@@ -421,8 +421,40 @@ function main(): void {
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--tag") args[i] = "--tags";
   }
-  const cucumberBin = path.resolve(process.cwd(), "node_modules", ".bin", process.platform === "win32" ? "cucumber-js.cmd" : "cucumber-js");
-  const result = spawnSync(cucumberBin, args, {
+
+  // On Windows PowerShell the leading "--" can be stripped, so npm swallows
+  // --tags/--parallel as its own config flags and only their values reach us
+  // as bare positionals (e.g. "@smoke", "2"). Recover them here.
+  const normalized: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    const prev = normalized[normalized.length - 1];
+    if (arg.startsWith("@") && prev !== "--tags") {
+      normalized.push("--tags", arg);
+    } else if (/^\d+$/.test(arg) && prev !== "--parallel" && !prev?.startsWith("-")) {
+      normalized.push("--parallel", arg);
+    } else {
+      normalized.push(arg);
+    }
+  }
+  // npm may also expose swallowed flags as npm_config_* env vars with real
+  // values (e.g. --tags=@smoke). Pick those up when not already present.
+  const envTags = process.env.npm_config_tags;
+  if (envTags && envTags !== "true" && !normalized.includes("--tags")) {
+    normalized.push("--tags", envTags);
+  }
+  const envParallel = process.env.npm_config_parallel;
+  if (envParallel && /^\d+$/.test(envParallel) && !normalized.includes("--parallel")) {
+    normalized.push("--parallel", envParallel);
+  }
+  args.length = 0;
+  args.push(...normalized);
+  const isWin = process.platform === "win32";
+  const cucumberBin = path.resolve(process.cwd(), "node_modules", ".bin", isWin ? "cucumber-js.cmd" : "cucumber-js");
+  const spawnArgs = isWin
+    ? args.map((a) => (/\s/.test(a) ? `"${a}"` : a))
+    : args;
+  const result = spawnSync(isWin ? `"${cucumberBin}"` : cucumberBin, spawnArgs, {
     stdio: "inherit",
     shell: process.platform === "win32",
     env: process.env,
