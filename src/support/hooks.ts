@@ -55,6 +55,7 @@ Before(async function (this: CustomWorld) {
 After(async function (this: CustomWorld, scenario) {
   if (scenario.result?.status === Status.FAILED && this.page) {
     const screenshot = await this.page.screenshot();
+    this.attach(`📷 Failure — ${scenario.pickle.name}`, "text/plain");
     this.attach(screenshot, "image/png");
   }
   if (!process.env.LEAVE_BROWSER_OPEN || process.env.LEAVE_BROWSER_OPEN.toLowerCase() !== "true") {

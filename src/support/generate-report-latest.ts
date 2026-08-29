@@ -114,18 +114,29 @@ function getRunTimings(): RunTimings {
   }
 }
 
-function extractStepLogs(step: Step): { logs: string[]; images: string[]; texts: string[] } {
+const CAPTION_PREFIX = "📷 ";
+
+interface StepImage { src: string; caption: string }
+
+function extractStepLogs(step: Step): { logs: string[]; images: StepImage[]; texts: string[] } {
   const logs: string[] = [];
-  const images: string[] = [];
+  const images: StepImage[] = [];
   const texts: string[] = [];
+  let pendingCaption: string | null = null;
   for (const emb of step.embeddings || []) {
     const mime = (emb.mime_type || "").toLowerCase();
     if (mime.startsWith("image/")) {
-      images.push(`data:${mime};base64,${emb.data}`);
+      images.push({
+        src: `data:${mime};base64,${emb.data}`,
+        caption: pendingCaption || `Screenshot ${images.length + 1}`,
+      });
+      pendingCaption = null;
     } else if (mime.startsWith("text/") || mime === "") {
       const decoded = Buffer.from(emb.data, "base64").toString("utf-8");
       if (decoded.startsWith(LOG_ATTACH_PREFIX)) {
         logs.push(decoded.slice(LOG_ATTACH_PREFIX.length));
+      } else if (decoded.startsWith(CAPTION_PREFIX)) {
+        pendingCaption = decoded.slice(CAPTION_PREFIX.length).trim();
       } else {
         texts.push(decoded);
       }
@@ -150,9 +161,16 @@ function renderStep(step: Step): string {
   const textsHtml = texts.length
     ? `<div class="step-logs"><div class="logs-title">Attachments</div><pre>${escapeHtml(texts.join("\n"))}</pre></div>`
     : "";
-  const imagesHtml = images
-    .map((src) => `<div class="step-screenshot"><img src="${src}" alt="screenshot" loading="lazy"/></div>`)
-    .join("");
+  const imagesHtml = images.length
+    ? `<div class="step-gallery"><div class="logs-title">Screenshots (${images.length})</div><div class="thumbs">${images
+        .map(
+          (img) =>
+            `<figure class="thumb" onclick="openLightbox(this)" data-caption="${escapeHtml(img.caption)}">` +
+            `<img src="${img.src}" alt="${escapeHtml(img.caption)}" loading="lazy"/>` +
+            `<figcaption>${escapeHtml(img.caption)}</figcaption></figure>`
+        )
+        .join("")}</div></div>`
+    : "";
   const errorHtml = step.result?.error_message
     ? `<div class="step-error"><div class="logs-title">Error</div><pre>${escapeHtml(step.result.error_message)}</pre></div>`
     : "";
@@ -317,7 +335,23 @@ function buildHtml(features: Feature[]): string {
   .step-logs pre, .step-error pre { background: #0b101c; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12.5px; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; word-break: break-word; color: #b9c4da; font-family: 'Cascadia Code', Consolas, monospace; }
   .step-error pre { border-color: rgba(248,113,113,.4); color: #fca5a5; }
   .step-logs, .step-error { margin-bottom: 10px; }
-  .step-screenshot img { max-width: 100%; border: 1px solid var(--border); border-radius: 8px; margin-top: 6px; }
+  .step-gallery { margin-bottom: 10px; }
+  .thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+  .thumb { width: 160px; cursor: zoom-in; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform .15s, border-color .15s; }
+  .thumb:hover { transform: scale(1.03); border-color: var(--blue); }
+  .thumb img { width: 100%; height: 100px; object-fit: cover; object-position: top; display: block; }
+  .thumb figcaption { font-size: 11px; color: var(--muted); padding: 5px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(5,8,16,.92); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 92vw; max-height: 80vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+  .lightbox .lb-caption { margin-top: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 8px 18px; border-radius: 999px; font-size: 14px; max-width: 80vw; }
+  .lightbox.hide-caption .lb-caption { display: none; }
+  .lightbox .lb-bar { position: absolute; top: 18px; right: 20px; display: flex; gap: 10px; }
+  .lightbox .lb-counter { position: absolute; top: 24px; left: 24px; color: var(--muted); font-size: 13px; }
+  .lightbox button { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  .lightbox button:hover { border-color: var(--blue); }
+  .lightbox .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 20px; padding: 12px 16px; border-radius: 50%; }
+  .lightbox .lb-prev { left: 20px; } .lightbox .lb-next { right: 20px; }
   footer { color: var(--muted); font-size: 12px; text-align: center; margin-top: 30px; }
 </style>
 </head>
@@ -368,7 +402,60 @@ function buildHtml(features: Feature[]): string {
 
   <footer>Generated on ${escapeHtml(new Date().toLocaleString())} by generate-report-latest.ts</footer>
 
+  <div class="lightbox" id="lightbox" onclick="if (event.target === this) closeLightbox()">
+    <span class="lb-counter" id="lbCounter"></span>
+    <div class="lb-bar">
+      <button onclick="toggleCaption()" id="lbCaptionBtn">Hide caption</button>
+      <button onclick="closeLightbox()">✕ Close</button>
+    </div>
+    <button class="lb-nav lb-prev" id="lbPrev" onclick="navLightbox(-1)">‹</button>
+    <img id="lbImage" src="" alt=""/>
+    <button class="lb-nav lb-next" id="lbNext" onclick="navLightbox(1)">›</button>
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+
   <script>
+    var lbGroup = [];
+    var lbIndex = 0;
+    function openLightbox(thumb) {
+      var thumbs = Array.prototype.slice.call(thumb.parentElement.querySelectorAll('.thumb'));
+      lbGroup = thumbs.map(function (t) {
+        return { src: t.querySelector('img').src, caption: t.getAttribute('data-caption') || '' };
+      });
+      lbIndex = thumbs.indexOf(thumb);
+      renderLightbox();
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function renderLightbox() {
+      var item = lbGroup[lbIndex];
+      document.getElementById('lbImage').src = item.src;
+      document.getElementById('lbCaption').textContent = item.caption;
+      document.getElementById('lbCounter').textContent = (lbIndex + 1) + ' / ' + lbGroup.length;
+      var multi = lbGroup.length > 1;
+      document.getElementById('lbPrev').style.display = multi ? '' : 'none';
+      document.getElementById('lbNext').style.display = multi ? '' : 'none';
+    }
+    function navLightbox(dir) {
+      lbIndex = (lbIndex + dir + lbGroup.length) % lbGroup.length;
+      renderLightbox();
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    function toggleCaption() {
+      var lb = document.getElementById('lightbox');
+      lb.classList.toggle('hide-caption');
+      document.getElementById('lbCaptionBtn').textContent =
+        lb.classList.contains('hide-caption') ? 'Show caption' : 'Hide caption';
+    }
+    document.addEventListener('keydown', function (e) {
+      var lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+    });
+
     document.querySelectorAll('.filters button').forEach(function (btn) {
       btn.addEventListener('click', function () {
         document.querySelectorAll('.filters button').forEach(function (b) { b.classList.remove('active'); });

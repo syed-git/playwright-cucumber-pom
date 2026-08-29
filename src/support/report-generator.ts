@@ -69,7 +69,7 @@ export async function captureAndAttach(pagerLocator: Page | Locator, caption: st
         const buffer = await pagerLocator.screenshot({ fullPage: false });
         // Caption goes first as plain text so it appears just above the image in the report 
         await attach(`📷 ${caption}`, { mediaType: 'text/plain' });
-        await attach(buffer, { mediatype: 'image/png' });
+        await attach(buffer, { mediaType: 'image/png' });
     } catch (screenshotErr) {
         console.warn(`[captureAndAttach] Failed to capture screenshot for '${caption}':`, screenshotErr);
     }
