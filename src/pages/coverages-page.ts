@@ -27,7 +27,7 @@ export class CoveragesPage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Coverages page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.safeClick(this.generaQuote);
+        await this.generaQuote.click();
         console.log('Navigating to next page...');
     }
 
@@ -37,8 +37,8 @@ export class CoveragesPage extends BasePage {
 
         if (bodilyInjury) {
             console.log(`selecting Bodily Injury Liability coverage with value: ${bodilyInjury}...`);
-            await this.safeCheck(this.coverageCheckbox('Bodily Injury Liability'));
-            await this.safeSelectOption(this.coverageLimit('Bodily Injury Liability'), bodilyInjury);
+            await this.coverageCheckbox('Bodily Injury Liability').check();
+            await this.coverageLimit('Bodily Injury Liability').selectOption(bodilyInjury);
         }
     }
 
@@ -47,8 +47,8 @@ export class CoveragesPage extends BasePage {
 
         if (propertyDamage) {
             console.log(`selecting Property Damage Liability with value: ${propertyDamage}`);
-            await this.safeCheck(this.coverageCheckbox('Property Damage Liability'));
-            await this.safeSelectOption(this.coverageLimit('Property Damage Liability'), propertyDamage);
+            await this.coverageCheckbox('Property Damage Liability').check();
+            await this.coverageLimit('Property Damage Liability').selectOption(propertyDamage);
         }
     }
 
@@ -57,11 +57,11 @@ export class CoveragesPage extends BasePage {
 
         if (uninsuredMotorist) {
             console.log(`selecting uninsured Motorist with value: ${uninsuredMotorist}`);
-            await this.safeCheck(this.coverageCheckbox('Uninsured Motorist'));
-            await this.safeSelectOption(this.coverageLimit('Property Damage Liability'), uninsuredMotorist);
+            await this.coverageCheckbox('Uninsured Motorist').check();
+            await this.coverageLimit('Uninsured Motorist').selectOption(uninsuredMotorist);
         } else {
             console.log(`deselecting uninsured Motorist`);
-            await this.safeUncheck(this.coverageCheckbox('Uninsured Motorist'));
+            await this.coverageCheckbox('Uninsured Motorist').uncheck();
         }
     }
 
@@ -70,8 +70,8 @@ export class CoveragesPage extends BasePage {
 
         if (medicalPayments) {
             console.log(`selecting Medical Payments with value: ${medicalPayments}`);
-            await this.safeCheck(this.coverageCheckbox('Medical Payments'));
-            await this.safeSelectOption(this.coverageLimit('Medical Payments'), medicalPayments);
+            await this.coverageCheckbox('Medical Payments').check();
+            await this.coverageLimit('Medical Payments').selectOption(medicalPayments);
         }
     }
 
@@ -80,11 +80,11 @@ export class CoveragesPage extends BasePage {
 
         if (comprehensive) {
             console.log(`selecting Comprehensive with value: ${comprehensive}`);
-            await this.safeCheck(this.coverageCheckbox('Comprehensive'));
-            await this.safeSelectOption(this.coverageLimit('Comprehensive'), comprehensive);
+            await this.coverageCheckbox('Comprehensive').check();
+            await this.coverageLimit('Comprehensive').selectOption(comprehensive);
         } else {
             console.log(`deselecting Comprehensive coverage`);
-            await this.safeUncheck(this.coverageCheckbox('Comprehensive'));
+            await this.coverageCheckbox('Comprehensive').uncheck();
         }
     }
 
@@ -93,8 +93,8 @@ export class CoveragesPage extends BasePage {
 
         if (collision) {
             console.log(`selecting collison with value: ${collision}`);
-            await this.safeCheck(this.coverageCheckbox('Collision'));
-            await this.safeSelectOption(this.coverageLimit('Collision'), collision);
+            await this.coverageCheckbox('Collision').check();
+            await this.coverageLimit('Collision').selectOption(collision);
         }
     }
 
@@ -103,8 +103,8 @@ export class CoveragesPage extends BasePage {
 
         if (rentalReimbursement) {
             console.log(`selecting Rental Reimbursement with value: ${rentalReimbursement}`);
-            await this.safeCheck(this.coverageCheckbox('Rental Reimbursement'));
-            await this.safeSelectOption(this.coverageLimit('Rental Reimbursement'), rentalReimbursement);
+            await this.coverageCheckbox('Rental Reimbursement').check();
+            await this.coverageLimit('Rental Reimbursement').selectOption(rentalReimbursement);
         }
     }
 
@@ -113,7 +113,7 @@ export class CoveragesPage extends BasePage {
 
         if (roadSideAssistance) {
             console.log(`selecting Roadside Assistance with value: ${roadSideAssistance}`);
-            await this.safeCheck(this.coverageCheckbox('Roadside Assistance'));
+            await this.coverageCheckbox('Roadside Assistance').check();
         }
     }
 

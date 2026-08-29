@@ -2,6 +2,7 @@ import { Given, Then } from "@cucumber/cucumber";
 import { CustomWorld } from "../../support/world";
 import { mergeWithDefaults } from "../../support/test-data-schema";
 import { GlobalData } from "../../support/global-data";
+import moment from 'moment';
 
 /**
  * Helper to set a value deep in an object using dotted paths.
@@ -24,6 +25,14 @@ function setDeep(obj: any, pathStr: string, val: any) {
 Given("user sets {string} to {string}", async function (this: CustomWorld, key: string, value: string) {
   setDeep(this.data, key, value);
   console.log(`setting ${key} to ${value}`);
+});
+
+Given("user sets {string} to past {int} days", async function (this: CustomWorld, key: string, days: number) {
+  if (key.includes('effectiveDate')) {
+    const value = moment().subtract(days, 'days').format('YYYY-MM-DD');
+    setDeep(this.data, key, value);
+    console.log(`setting ${key} to ${value}`);
+  }
 });
 
 Then("user requests the graystoneData", async function (this: CustomWorld) {

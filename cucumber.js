@@ -6,7 +6,7 @@ module.exports = {
     format: [
       "progress-bar",
       ["message", "reports/cucumber-messages.ndjson"],
-      ["html", "repports/html-formatter.html"],
+      ["html", "reports/html-formatter.html"],
       ["json", "reports/cucumber-report.json"],
     ],
     retry: 1,
