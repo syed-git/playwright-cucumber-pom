@@ -1,0 +1,94 @@
+{
+    "effectiveDate": "09-20-2026",
+    "numberOfInsured": "2",
+    "numberOfDrivers": "2",
+    "numberOfVehicles": "2",
+    "Insured": {
+        "NamedInsured1": {
+            "firstName": "Joe",
+            "lastName": "Biden",
+            "dateOfBirth": "09-01-1989",
+            "gender": "Male",
+            "email": "sjsj@gmail.com",
+            "phone": "53638",
+            "address": "Ppainin 227",
+            "city": "New York",
+            "state": "Florida",
+            "zip": 56443,
+            "isPrimaryInsured": "true"
+        },
+        "NamedInsured2": {
+            "firstName": "William",
+            "lastName": "James",
+            "dateOfBirth": "09-01-1979",
+            "gender": "Female",
+            "email": "ehjbd@gmail.com",
+            "phone": "3738",
+            "address": "ahbdjabsd 227",
+            "city": "New York",
+            "state": "Florida",
+            "zip": 56443,
+            "isPrimaryInsured": "false"
+        }
+    },
+    "Drivers":{
+        "Driver1": {
+            "firstName": "John",
+            "lastName": "Wick",
+            "dateOfBirth": "09-01-1979",
+            "gender": "Female",
+            "licenseNumber": "74947974",
+            "licenseState": "asdkh",
+            "yearsLicensed": "5",
+            "accidents": "9",
+            "violations": "6",
+            "relationshipToInsured": "Insured"
+        },
+        "Driver2": {
+            "firstName": "Jack",
+            "lastName": "Sparrow",
+            "dateOfBirth": "09-01-1979",
+            "gender": "Female",
+            "licenseNumber": "74947974",
+            "licenseState": "asdkh",
+            "yearsLicensed": "5",
+            "accidents": "9",
+            "violations": "6",
+            "relationshipToInsured": "Insured"
+        }
+    },
+    "Vehicles": {
+        "Vehicle1": {
+            "year": "2020",
+            "make": "Toyota",
+            "model": "ehgd",
+            "vin": "VIN376683HJGDJSH",
+            "ownership": "owned",
+            "usage": "Commuting",
+            "annualMileage": "6590",
+            "costNew": "58999",
+            "primaryDriver": "1"
+        },
+        "Vehicle2": {
+            "year": "2025",
+            "make": "ajsd",
+            "model": "ehgd",
+            "vin": "VIN376683HJGDJSH",
+            "ownership": "owned",
+            "usage": "Commuting",
+            "annualMileage": "6590",
+            "costNew": "58999",
+            "primaryDriver": "1"
+        }
+    },
+    "Coverages": {
+        "bodilyInjuryLiability": "50,0000/100,000",
+        "propertyDamageLiability": "50,000",
+        "uninsuredMotorist": "50,000/100,000",
+        "medicalPayments": "1,000",
+        "comprehensive": "250",
+        "collision": "250",
+        "rentalReimbursement": "30/day, 900 max",
+        "roadSideAssitance": "true"
+    }
+}

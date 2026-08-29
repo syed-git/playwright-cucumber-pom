@@ -1,0 +1,15 @@
+{
+  // Associate .feature files with Gherkin and configure the Cucumber autocomplete extension
+  "files.associations": {
+    "*.feature": "feature"
+  },
+
+  // alexkrechik.cucumberautocomplete settings
+  "cucumberautocomplete.steps": [
+    "src/step-definitions/**/*.ts"
+  ],
+  "cucumberautocomplete.stepsFormat": "typescript",
+  "cucumberautocomplete.syncfeatures": "src/features/**/*.feature",
+  "cucumberautocomplete.smartSnippets": true,
+  "cucumberautocomplete.strictGherkinCompletion": true
+}

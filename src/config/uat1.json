@@ -1,0 +1,11 @@
+{
+    "baseUrl": "https://wondrous-jelly-b5e5f2.netlify.app/",
+    "accountExecutive": {
+        "username": "auser",
+        "password": "password"
+    },
+    "underwriter": {
+        "username": "underwriter",
+        "password": "password"
+    }
+}
