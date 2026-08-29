@@ -13,7 +13,7 @@ export class HomePage extends BasePage {
 
   async clickNewSubmission() {
     console.log('Starting a new submission....');
-    await this.newSubmissionButton.click();
+    await this.safeClick(this.newSubmissionButton);
     await expect(this.heading).toBeVisible();
     console.log('New submission started....');
   }

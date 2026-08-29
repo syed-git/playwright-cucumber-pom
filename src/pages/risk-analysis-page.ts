@@ -12,8 +12,13 @@ export class RsikAnalysisPage extends BasePage {
     }
 
     async fillOutPage(autoGraystoneData: any) {
-        if (await this.underwritingIssue.isVisible()) {
-            await this.submitForUnderwriting.click();
+        // isVisible() returns immediately; give the page a moment to render the issue banner
+        const hasUnderwritingIssue = await this.underwritingIssue
+            .waitFor({ state: "visible", timeout: 10000 })
+            .then(() => true)
+            .catch(() => false);
+        if (hasUnderwritingIssue) {
+            await this.safeClick(this.submitForUnderwriting);
             await expect(this.awaitingMessage).toBeVisible();
         }
     }
@@ -21,7 +26,7 @@ export class RsikAnalysisPage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Risk Analysis page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.issuePolicy.click();
+        await this.safeClick(this.issuePolicy);
         console.log('Navigating to next page...');
     }
     

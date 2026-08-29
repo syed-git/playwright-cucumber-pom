@@ -15,12 +15,16 @@ export class UWApprovalsPage extends BasePage {
 
   async approvaAllUnderwritingIssues() {
     console.log('navigating to UW Approvals...');
-    await this.uwApprovalTab.click();
+    await this.safeClick(this.uwApprovalTab);
 
     console.log('Checking if any approval is pending...');
-    if (await this.approve.isVisible()) {
+    const approvalPending = await this.approve
+      .waitFor({ state: "visible", timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+    if (approvalPending) {
       console.log('Approving the issues....')
-      await this.approve.click();
+      await this.safeClick(this.approve);
     } else {
       console.log('No approvals are pending.....');
     }

@@ -28,7 +28,7 @@ export class PolicySummaryPage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Policy Summary page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.viewFullPolicy.click();
+        await this.safeClick(this.viewFullPolicy);
         console.log('Navigating to next page...');
     }
     

@@ -60,7 +60,10 @@ export class Navigator {
 
   
   async navigateTo(tabName: string) {
-    await this.page.getByRole('link', { name: tabName}).first().click();
+    const tabLink = this.page.getByRole('link', { name: tabName}).first();
+    await tabLink.waitFor({ state: "attached" });
+    await tabLink.evaluate((el) => el.scrollIntoView({ block: "center", inline: "center" }));
+    await tabLink.click();
     await expect(this.page.getByRole('heading', { name: tabName})).toBeVisible();
   }
 

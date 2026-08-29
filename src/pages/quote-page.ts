@@ -31,7 +31,7 @@ export class QuotePage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Quote page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.reviewButton.click();
+        await this.safeClick(this.reviewButton);
         console.log('Navigating to next page...');
     }
 
