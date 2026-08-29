@@ -11,7 +11,8 @@ Before(async function (this: CustomWorld) {
   this.data = {};
   const environment = process.env.ENV || "uat1";
   const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : true || false;
-  const browserType = process.env.BROWSER || "chromium";
+  const supportedBrowsers = ["chromium", "firefox", "webkit"];
+  const browserType = supportedBrowsers.includes(process.env.BROWSER || "") ? (process.env.BROWSER as string) : "chromium";
 
   switch (browserType) {
     case "chromium":
@@ -29,6 +30,22 @@ Before(async function (this: CustomWorld) {
 
   this.context = await this.browser.newContext({
     ignoreHTTPSErrors: true,
+    viewport: { width: 1920, height: 1080 },
+  });
+  // Floating overlays (e.g. the Netlify badge iframe) sit on top of the page and
+  // intercept pointer events after Playwright auto-scrolls an element into view.
+  // Disable pointer events on them so clicks on scrolled-to elements succeed.
+  await this.context.addInitScript(() => {
+    const injectStyle = () => {
+      const style = document.createElement("style");
+      style.textContent = "#nl-badge-frame, #nl-badge, [id^='nl-badge'] { display: none !important; pointer-events: none !important; }";
+      (document.head || document.documentElement).appendChild(style);
+    };
+    if (document.documentElement) {
+      injectStyle();
+    } else {
+      document.addEventListener("DOMContentLoaded", injectStyle);
+    }
   });
   this.page = await this.context.newPage();
   this.environment = environment;
@@ -38,6 +55,7 @@ Before(async function (this: CustomWorld) {
 After(async function (this: CustomWorld, scenario) {
   if (scenario.result?.status === Status.FAILED && this.page) {
     const screenshot = await this.page.screenshot();
+    this.attach(`📷 Failure — ${scenario.pickle.name}`, "text/plain");
     this.attach(screenshot, "image/png");
   }
   if (!process.env.LEAVE_BROWSER_OPEN || process.env.LEAVE_BROWSER_OPEN.toLowerCase() !== "true") {
@@ -47,21 +65,6 @@ After(async function (this: CustomWorld, scenario) {
   }
 });
 
-AfterAll(async function () {
-    // serial mode: run report in-process via beforeExit - Console.log prints to terminal normally
-    if (!process.env.CUCUMBER_WORKER_ID) {
-      process.on('beforeExit', () =>{
-        try {
-          // call generateReport();
-        } catch (e) {
-          console.log('Report generation failed:', e);
-        }
-      });
-      return;
-    }
-
-    //parallel mode
-    if (process.env.CUCUMBER_WORKER_ID === '0') {
-      require('child_process').spawn(process.execPath, ['-r', 'ts-node/register', '-e', `const cpid=${process.ppid};const iv=setInterval(()=>{try{process.kill(cpid,0);}catch{clearInterval(iv);setTimeout(()=>{require('./playwright/support/report-generator').generateHtmlDashboard();process.exit(0);},500);}},500);setTimeout(()=>process.exit(1),600000);}})`])
-    }
-});
+// HTML dashboard generation is handled by src/support/generate-report-latest.ts,
+// which wraps the cucumber-js run (see the "test" script in package.json) and works
+// for both serial and parallel executions.

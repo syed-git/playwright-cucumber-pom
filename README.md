@@ -55,6 +55,21 @@ npx playwright install
 npm test
 ```
 
+Filter by tags and/or run in parallel:
+
+```bash
+npm run test -- --tags "@currentDatePolicy"
+npm run test -- --tags "@smoke" --parallel 3
+```
+
+Every run generates a timestamped HTML dashboard under `reports/dashboard/`
+(plus a stable `execution-report-latest.html` copy). To regenerate the
+dashboard from the last run without re-running tests:
+
+```bash
+npm run report:latest
+```
+
 Headed:
 
 ```bash

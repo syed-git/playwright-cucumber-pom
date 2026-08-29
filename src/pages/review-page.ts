@@ -16,7 +16,7 @@ export class ReviewPage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Review page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.rsikAnalysisButton.click();
+        await this.safeClick(this.rsikAnalysisButton);
         console.log('Navigating to next page...');
     }
     

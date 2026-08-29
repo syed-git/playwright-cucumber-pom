@@ -18,11 +18,11 @@ export class PoliciesPage extends BasePage {
     const policyNumber = GlobalData.getPolicyNumber();
     await this.policyNumnbeInput.pressSequentially(policyNumber, { delay: 100});
     await this.result(policyNumber).waitFor({ state: "visible", timeout:10000});
-    await this.result(policyNumber).click();
+    await this.safeClick(this.result(policyNumber));
   }
 
   async logout () {
-    await this.logoutButton.click();
+    await this.safeClick(this.logoutButton);
     await expect(this.loginButton).toBeVisible();
   }
 }

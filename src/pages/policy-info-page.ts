@@ -43,13 +43,13 @@ export class PolicyInfoPage extends BasePage {
   async fillOutPageAndContinue(autoGraystoneData: any) {
     console.log('user is on T=the POlicy Infor page..');
     await this.fillOutPage(autoGraystoneData);
-    await this.nextButton.click();
+    await this.safeClick(this.nextButton);
     console.log('navigating to next page...')
   }
 
   async fillEffectiveDate(effectiveDate: string) {
     console.log('Entering effective date....');
-    await this.effectiveDateInput.fill(effectiveDate);
+    await this.safeFill(this.effectiveDateInput, effectiveDate);
   }
 
   async fillInsuredDetails(autoGraystoneData: any) {
@@ -64,43 +64,43 @@ export class PolicyInfoPage extends BasePage {
         const insuredData = autoGraystoneData.Insured[`NamedInsured${i}`];
         
         console.log('Clicking on Add Insured button...');
-        await this.addInsuredButton.click();
+        await this.safeClick(this.addInsuredButton);
         console.log('Entering first name...');
-        await this.firstName.fill(insuredData.firstName);
+        await this.safeFill(this.firstName, insuredData.firstName);
         console.log('Entering last name...');
-        await this.lastName.fill(insuredData.lastName);
+        await this.safeFill(this.lastName, insuredData.lastName);
         console.log('Entering date of birth...');
-        await this.dateOfBirth.fill(insuredData.dateOfBirth);
+        await this.safeFill(this.dateOfBirth, insuredData.dateOfBirth);
         console.log('selecting the gender....');
-        await this.gender.selectOption(insuredData.gender);
+        await this.safeSelectOption(this.gender, insuredData.gender);
 
         if (insuredData.email) {
           console.log('Entering email...');
-          await this.email.fill(insuredData.email);
+          await this.safeFill(this.email, insuredData.email);
         }
         if (insuredData.phone) {
           console.log('Entering phone...');
-          await this.phone.fill(insuredData.phone);
+          await this.safeFill(this.phone, insuredData.phone);
         }
         if (insuredData.address) {
           console.log('Entering address...');
-          await this.address.fill(insuredData.address);
+          await this.safeFill(this.address, insuredData.address);
         }
         if (insuredData.city) {
           console.log('Entering city...');
-            await this.city.fill(insuredData.city);
+            await this.safeFill(this.city, insuredData.city);
         }
         if (insuredData.state) {
           console.log('Entering state...');
-            await this.state.fill(insuredData.state);
+            await this.safeFill(this.state, insuredData.state);
         }
         if (insuredData.zip) {
           console.log('Entering zip...');
-            await this.zip.fill(insuredData.zip);
+            await this.safeFill(this.zip, insuredData.zip);
         }
         console.log('selecting is primary inusred option...');
-        await this.primaryInsured.selectOption(insuredData.isPrimaryInsured ? 'Yes' : 'No');
-        await this.saveInsuredButton.click();
+        await this.safeSelectOption(this.primaryInsured, insuredData.isPrimaryInsured ? 'Yes' : 'No');
+        await this.safeClick(this.saveInsuredButton);
         console.log(`Insured${i} details saved successfully....`);
     }    
   }

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "npx cucumber-js",
-    "test:headed": "cross-env HEADLESS=false cucumber-js",
-    "test:debug": "cross-env PWDEBUG=1 cucumber-js",
-    "report": "npx ts-node src/support/report.ts"
+    "test": "ts-node src/support/generate-report-latest.ts",
+    "test:headed": "cross-env HEADLESS=false ts-node src/support/generate-report-latest.ts",
+    "test:debug": "cross-env PWDEBUG=1 ts-node src/support/generate-report-latest.ts",
+    "report:latest": "ts-node src/support/generate-report-latest.ts --report-only"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^12.2.0",

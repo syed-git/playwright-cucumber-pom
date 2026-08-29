@@ -15,14 +15,14 @@ export class LoginPage extends BasePage {
 
   async loginAs(username: string, password: string, baseUrl: string) {
     await this.page.goto(baseUrl, { waitUntil: "networkidle" });
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
+    await this.safeFill(this.usernameInput, username);
+    await this.safeFill(this.passwordInput, password);
+    await this.safeClick(this.loginButton);
     await expect(this.page).toHaveTitle(/PolicyCenter — Personal Auto/); 
   }
 
   async logout () {
-    await this.logoutButton.click();
+    await this.safeClick(this.logoutButton);
     await expect(this.loginButton).toBeVisible();
   }
 }

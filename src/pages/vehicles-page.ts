@@ -28,7 +28,7 @@ export class VehiclesPage extends BasePage {
     async fillOutPageAndContinue(autoGraystoneData: any) {
         console.log('user is on Vehicles page...');
         await this.fillOutPage(autoGraystoneData);
-        await this.nextButton.click();
+        await this.safeClick(this.nextButton);
         console.log('naviagting to next page...');
     }
 
@@ -39,7 +39,7 @@ export class VehiclesPage extends BasePage {
 
         for (let i = 1; i <= numberOfVehicles; i++) {
             console.log('clicking on Add Vehicle button...');
-            await this.addVehicle.click();
+            await this.safeClick(this.addVehicle);
             console.log(`Adding Vehicle ${i} details...`);
 
             // get driver object based on index
@@ -47,37 +47,37 @@ export class VehiclesPage extends BasePage {
 
             // fill out details
             console.log('Entering year...');
-            await this.year.fill(vehicleData.year);
+            await this.safeFill(this.year, vehicleData.year);
             console.log('Entering make...');
-            await this.make.fill(vehicleData.make);
+            await this.safeFill(this.make, vehicleData.make);
             console.log('Entering model...');
-            await this.model.fill(vehicleData.model);
+            await this.safeFill(this.model, vehicleData.model);
             console.log('Entering vin...');
-            await this.vin.fill(vehicleData.vin);
+            await this.safeFill(this.vin, vehicleData.vin);
             console.log('selecting ownership...');
-            await this.ownership.selectOption(vehicleData.ownership);
+            await this.safeSelectOption(this.ownership, vehicleData.ownership);
 
             if (vehicleData.usage) {
                 console.log('selecting usage....');
-                await this.usage.selectOption(vehicleData.usage);
+                await this.safeSelectOption(this.usage, vehicleData.usage);
             }
             if (vehicleData.annualMileage) {
                 console.log('enetring annual mileage....');
-                await this.annualMileage.fill(vehicleData.annualMileage);
+                await this.safeFill(this.annualMileage, vehicleData.annualMileage);
             }
             if (vehicleData.costNew) {
                 console.log('entering cost new....');
-                await this.costNew.fill(vehicleData.costNew);
+                await this.safeFill(this.costNew, vehicleData.costNew);
             }
             if (vehicleData.primaryDriver) {
                 console.log('selecting primary driver....');
                 const driverNum = parseInt(vehicleData.primaryDriver);
                 const driverName = `${autoGraystoneData.Drivers[`Driver${driverNum}`].firstName} ${autoGraystoneData.Drivers[`Driver${driverNum}`].lastName}`;
                 console.log('<<<<<<<<<<<<>>>>>>>>>>>>>>', driverName)
-                await this.primaryDriver.selectOption(driverName);
+                await this.safeSelectOption(this.primaryDriver, driverName);
             }
             
-            await this.saveVehicleButton.click();
+            await this.safeClick(this.saveVehicleButton);
             console.log(`vehicle${1} details saved successfully...`);
         }
         
