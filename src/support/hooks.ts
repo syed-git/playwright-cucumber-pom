@@ -1,4 +1,4 @@
-import { After, AfterAll, Before, setDefaultTimeout, Status } from "@cucumber/cucumber";
+import { After, Before, setDefaultTimeout, Status } from "@cucumber/cucumber";
 import { chromium, firefox, webkit } from "@playwright/test";
 import { CustomWorld } from "./world";
 import { expect as baseExpect} from '@playwright/test'
@@ -10,7 +10,7 @@ Before(async function (this: CustomWorld) {
   // Clear test data for fresh scenario
   this.data = {};
   const environment = process.env.ENV || "uat1";
-  const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : true || false;
+  const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : true;
   const supportedBrowsers = ["chromium", "firefox", "webkit"];
   const browserType = supportedBrowsers.includes(process.env.BROWSER || "") ? (process.env.BROWSER as string) : "chromium";
 

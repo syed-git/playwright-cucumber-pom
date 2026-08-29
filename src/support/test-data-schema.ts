@@ -50,7 +50,7 @@ const INSURED_MANDATORY_FIELDS = new Set(["firstName", "lastName", "gender", "da
 /**
  * Fields that are optional for Insured objects (only include if user provides them).
  */
-const INSURED_OPTIONAL_FIELDS = new Set(["email", "phone", "address", "city", "state", "zip"]);
+const _INSURED_OPTIONAL_FIELDS = new Set(["email", "phone", "address", "city", "state", "zip"]);
 
 /**
  * Fields that are mandatory for Driver objects (must always be present).
@@ -60,7 +60,7 @@ const DRIVER_MANDATORY_FIELDS = new Set(["firstName", "lastName", "gender", "dat
 /**
  * Fields that are optional for Driver objects (only include if user provides them).
  */
-const DRIVER_OPTIONAL_FIELDS = new Set(["email", "phone", "address", "city", "state", "zip"]);
+const _DRIVER_OPTIONAL_FIELDS = new Set(["email", "phone", "address", "city", "state", "zip"]);
 
 /**
  * Fields that are mandatory for Vehicle objects (must always be present).
@@ -149,7 +149,7 @@ export function generateRandomValue(key: string): string {
  * Also dynamically expands Insured, Drivers, Vehicles based on count fields.
  */
 export function mergeWithDefaults(userData: Record<string, any>, schema: Record<string, any> = TEST_DATA_SCHEMA): Record<string, any> {
-  function merge(userObj: any, schemaObj: any, isInsured: boolean = false): any {
+  function merge(userObj: any, schemaObj: any, _isInsured: boolean = false): any {
     if (typeof schemaObj !== "object" || schemaObj === null) {
       return userObj ?? generateRandomValue("");
     }
@@ -172,7 +172,7 @@ export function mergeWithDefaults(userData: Record<string, any>, schema: Record<
     return result;
   }
 
-  let merged = merge(userData, schema, false);
+  const merged = merge(userData, schema, false);
 
   // Add any user-provided top-level keys that are not in the schema
   for (const key of Object.keys(userData)) {

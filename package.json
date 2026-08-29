@@ -6,16 +6,21 @@
     "test": "ts-node src/support/generate-report-latest.ts",
     "test:headed": "cross-env HEADLESS=false ts-node src/support/generate-report-latest.ts",
     "test:debug": "cross-env PWDEBUG=1 ts-node src/support/generate-report-latest.ts",
-    "report:latest": "ts-node src/support/generate-report-latest.ts --report-only"
+    "report:latest": "ts-node src/support/generate-report-latest.ts --report-only",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^12.2.0",
+    "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.54.0",
     "@types/node": "^24.3.0",
     "cross-env": "^10.0.0",
+    "eslint": "^9.39.5",
     "playwright": "^1.54.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.68.0"
   },
   "dependencies": {
     "playwright": "^1.54.0"

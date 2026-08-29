@@ -1,6 +1,6 @@
 Feature: POlicy Submission
 
-  @NewPolicy @currentDatePolicy @accountExecutive @smoke
+  @NewPolicy @currentDatePolicy @accountExecutive @smoke @build @regression
   Scenario: create a new policy submission
     Given user sets 'numberOfInsured' to '3'
     Given user sets 'numberOfDrivers' to '3'
@@ -19,7 +19,7 @@ Feature: POlicy Submission
     When user initiates a new submission
     Then user navigates from 'Policy Info' to 'View Full Policy' page
 
-  @NewPolicy @BackDatedPolicy @Underwriter @smoke
+  @NewPolicy @BackDatedPolicy @Underwriter @smoke @regression
   Scenario: create a new 90 days back dated policy submission
     Given user sets 'effectiveDate' to '2026-04-04'
     Given user sets 'numberOfInsured' to '1'
