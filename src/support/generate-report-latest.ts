@@ -510,6 +510,14 @@ function buildHtml(features: Feature[]): string {
 // Entry points
 // ---------------------------------------------------------------------------
 
+function formatLocalTimestamp(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `-${pad(date.getHours())}-${pad(date.getMinutes())}-${pad(date.getSeconds())}`
+  );
+}
+
 export function generateDashboard(): string | null {
   if (!fs.existsSync(JSON_REPORT)) {
     console.error(`[generate-report-latest] No JSON report found at ${JSON_REPORT}. Run the tests first.`);
@@ -519,12 +527,12 @@ export function generateDashboard(): string | null {
   const html = buildHtml(features);
 
   fs.mkdirSync(DASHBOARD_DIR, { recursive: true });
-  const timestamp = new Date().toISOString().replace(/[:T]/g, "-").replace(/\..+/, "");
-  const outFile = path.join(DASHBOARD_DIR, `execution-report-${timestamp}.html`);
+  const localTimeStamp = formatLocalTimestamp(new Date());
+  const outFile = path.join(DASHBOARD_DIR, `cucumber-playwright-report-${localTimeStamp}.html`);
   fs.writeFileSync(outFile, html, "utf-8");
 
   // Also keep a stable "latest" copy for easy bookmarking / CI artifacts.
-  fs.writeFileSync(path.join(DASHBOARD_DIR, "execution-report-latest.html"), html, "utf-8");
+  fs.writeFileSync(path.join(DASHBOARD_DIR, "cucumber-playwright-report-latest.html"), html, "utf-8");
 
   console.log(`\n📊 HTML dashboard generated: ${outFile}`);
   return outFile;

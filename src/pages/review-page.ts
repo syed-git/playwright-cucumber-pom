@@ -9,7 +9,7 @@ export class ReviewPage extends BasePage {
         super(page);
     }
 
-    async fillOutPage(autoGraystoneData: any) {
+    async fillOutPage(_autoGraystoneData: any) {
         // do nothing
     }
 

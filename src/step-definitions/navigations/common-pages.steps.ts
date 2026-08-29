@@ -41,7 +41,6 @@ When("user fills the {string} page", async function (this: CustomWorld, pageName
 });
 
 When("user navigates to {string} tab", async function (this: CustomWorld, tabName: string) {
-    const autoGraystoneData = GlobalData.getData();
     const navigator = new Navigator(this.page, [PolicyInfoPage, DriversPage, VehiclesPage, CoveragesPage, QuotePage, ReviewPage, RsikAnalysisPage, PolicySummaryPage, ViewFullPolicyPage]);
     await navigator.navigateTo(tabName);
 });

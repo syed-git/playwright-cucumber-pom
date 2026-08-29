@@ -11,8 +11,11 @@ This framework demonstrates:
 - `fillOutCurrentPage()` and `fillOutCurrentPageAndContinue()` methods
 - Environment configuration
 - Cucumber HTML/JSON reporting
+- Timestamped HTML dashboard reports (`cucumber-playwright-report-${localTimeStamp}.html`)
 - Screenshot attachment on failure
 - A basic `PageNavigator`
+- ESLint code quality checks (`console.log` is allowed)
+- GitHub Actions CI/CD pipeline with 3 sequential stages
 
 ## Folder structure
 
@@ -60,14 +63,8 @@ Filter by tags and/or run in parallel:
 ```bash
 npm run test -- --tags "@currentDatePolicy"
 npm run test -- --tags "@smoke" --parallel 3
-```
-
-Every run generates a timestamped HTML dashboard under `reports/dashboard/`
-(plus a stable `execution-report-latest.html` copy). To regenerate the
-dashboard from the last run without re-running tests:
-
-```bash
-npm run report:latest
+npm run test -- --tags "@build"
+npm run test -- --tags "@regression"
 ```
 
 Headed:
@@ -81,6 +78,43 @@ Specific environment:
 ```bash
 cross-env ENV=qa npm test
 ```
+
+## Reporting
+
+Every run generates a timestamped HTML dashboard under `reports/dashboard/`
+named `cucumber-playwright-report-${localTimeStamp}.html` (e.g.
+`cucumber-playwright-report-2026-08-29-15-30-45.html`, using your local time),
+plus a stable `cucumber-playwright-report-latest.html` copy. To regenerate the
+dashboard from the last run without re-running tests:
+
+```bash
+npm run report:latest
+```
+
+## Linting
+
+ESLint (flat config, `eslint.config.mjs`) with TypeScript support:
+
+```bash
+npm run lint       # check for issues
+npm run lint:fix   # auto-fix where possible
+```
+
+`console.log` is allowed (`no-console` is disabled) since step definitions and
+reporting rely on console output.
+
+## CI/CD (GitHub Actions)
+
+`.github/workflows/ci.yml` runs on pushes to `master`, pull requests, and
+manual dispatch. It has 3 stages that run sequentially, each depending on the
+previous one:
+
+1. **Code Quality (ESLint)** — `npm run lint`
+2. **Build Scenarios** — runs scenarios tagged `@build`
+3. **Regression Scenarios** — runs scenarios tagged `@regression`
+
+If a stage fails, subsequent stages are skipped. The HTML dashboard from each
+test stage is uploaded as a workflow artifact.
 
 ## Add a new page
 

@@ -12,7 +12,7 @@ export class PolicySummaryPage extends BasePage {
         super(page);
     }
 
-    async fillOutPage(autoGraystoneData: any) {
+    async fillOutPage(_autoGraystoneData: any) {
         console.log(`Policy Summary:\n
             POLICY #:       ${await this.entity('Policy #').innerText()}\n
             STATUS:         ${await this.entity('Status').innerText()}\n
