@@ -14,13 +14,51 @@
 
 import { spawnSync } from "child_process";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
+import type { Page, Locator } from "@playwright/test";
 
 const REPORTS_DIR = path.resolve(process.cwd(), "reports");
 const JSON_REPORT = path.join(REPORTS_DIR, "cucumber-report.json");
 const MESSAGES_NDJSON = path.join(REPORTS_DIR, "cucumber-messages.ndjson");
 const DASHBOARD_DIR = path.join(REPORTS_DIR, "dashboard");
 const LOG_ATTACH_PREFIX = "💻__CONSOLE__";
+
+type AttachFn = (data: any, options?: any) => void | Promise<void>;
+
+/**
+ * Capture a screenshot of a full page or a single element (Locator) with a
+ * caption, and attach it to the current cucumber step. The dashboard shows it
+ * as an inline thumbnail beside the step duration, and the caption appears in
+ * the lightbox viewer.
+ *
+ * Usage inside a step definition or page object:
+ *   await captureScreenshot(this.page, "After login", this.attach.bind(this));
+ *   await captureScreenshot(page.locator("#summary"), "Policy summary", attach);
+ */
+export async function captureScreenshot(
+  target: Page | Locator,
+  caption: string,
+  attach?: AttachFn
+): Promise<void> {
+  if (!attach) return;
+  try {
+    const buffer = await target.screenshot();
+    await attach(`📷 ${caption}`, { mediaType: "text/plain" });
+    await attach(buffer, { mediaType: "image/png" });
+  } catch (err) {
+    console.warn(`[captureScreenshot] Failed to capture '${caption}':`, err);
+  }
+}
+
+function platformName(): string {
+  switch (os.platform()) {
+    case "win32": return `Windows ${os.release()}`;
+    case "darwin": return "macOS";
+    case "linux": return "Linux";
+    default: return os.platform();
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Types (cucumber JSON formatter shape)
@@ -359,6 +397,7 @@ function buildHtml(features: Feature[]): string {
     </div>
     <div class="env-chips">
       <span class="chip">🌐 Environment: <b>${escapeHtml(environment)}</b></span>
+      <span class="chip">💻 Platform: <b>${escapeHtml(platformName())}</b></span>
       <span class="chip">🧭 Browser: <b>${escapeHtml(browser)}</b></span>
       <span class="chip">⏱ Total Time: <b>${escapeHtml(totalTime)}</b></span>
     </div>
