@@ -10,7 +10,7 @@ Before(async function (this: CustomWorld) {
   // Clear test data for fresh scenario
   this.data = {};
   const environment = process.env.ENV || "uat1";
-  const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : true;
+  const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : false;
   const supportedBrowsers = ["chromium", "firefox", "webkit"];
   const browserType = supportedBrowsers.includes(process.env.BROWSER || "") ? (process.env.BROWSER as string) : "chromium";
 

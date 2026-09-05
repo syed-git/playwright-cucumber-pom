@@ -5,6 +5,7 @@ export class GlobalData {
   private static data: Record<string, any> = {};
   private static policyNumber: string = '';
   private static currentPageName: string = '';
+  private static submissionNumber: string = '';
 
   /**
    * Set the entire data object.
@@ -33,6 +34,18 @@ export class GlobalData {
    */
   static getPolicyNumber(): string {
     return GlobalData.policyNumber;
+  }
+
+  static setSubmissionNumber(submissionNumber: string) {
+    GlobalData.submissionNumber = submissionNumber;
+  }
+  
+
+  /**
+   * Get the policy number.
+   */
+  static getSubmissionNumber(): string {
+    return GlobalData.submissionNumber;
   }
 
   /**

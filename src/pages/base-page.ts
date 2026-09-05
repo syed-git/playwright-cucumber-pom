@@ -6,8 +6,8 @@ export class BasePage {
 
     constructor(page: Page) {
         this._page = page;
-        this._page.setDefaultNavigationTimeout(90000);
-        this._page.setDefaultTimeout(90000);
+        this._page.setDefaultNavigationTimeout(60000);
+        this._page.setDefaultTimeout(60000);
     }
 
     get page(): Page {
