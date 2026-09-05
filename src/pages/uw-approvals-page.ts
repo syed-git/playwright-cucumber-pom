@@ -1,7 +1,6 @@
 import { Locator, Page } from "playwright/test";
 import { BasePage } from "./base-page";
 import { expect } from "../support/hooks";
-import { GlobalData } from "../support/global-data";
 
 export class UWApprovalsPage extends BasePage {
 

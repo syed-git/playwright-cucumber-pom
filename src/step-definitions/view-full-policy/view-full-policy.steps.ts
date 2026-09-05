@@ -10,9 +10,8 @@ Given("user initiates the policy change", async function (this: CustomWorld) {
 });
 
 Given("user initiates {string} policy cancellation", async function (this: CustomWorld, cancellationType: string) {
-  const autoGraystoneData = GlobalData.getData();
   const viewFullPolicy = new ViewFullPolicyPage(this.page);
-  await viewFullPolicy.initiatePolicyCancellation(cancellationType, autoGraystoneData);
+  await viewFullPolicy.initiatePolicyCancellation(cancellationType);
 });
 
 Given("user reinstate the policy", async function (this: CustomWorld) {

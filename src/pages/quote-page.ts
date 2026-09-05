@@ -17,11 +17,12 @@ export class QuotePage extends BasePage {
     async fillOutPage(autoGraystoneData: any) {
         console.log(`Policy quoted successfully...`); 
         console.log(`Policy Summary...\n\n
-            DRIVERS:          ${await this.entity('Driver factors').innerText()}\n
-            VEHICLES:         ${await this.entity('Vehicle base').innerText()}\n
-            Subtotal:         ${await this.entity('Subtotal').innerText()}\n
-            Taxes & fee (6%): ${await this.entity('Taxes & fees').innerText()}\n
-            Total Premium:    ${await this.entity('Total Premium').innerText()}\n
+            POLICY EFFECTIVE DATE: ${autoGraystoneData.effectiveDate}\n
+            DRIVERS:               ${await this.entity('Driver factors').innerText()}\n
+            VEHICLES:              ${await this.entity('Vehicle base').innerText()}\n
+            Subtotal:              ${await this.entity('Subtotal').innerText()}\n
+            Taxes & fee (6%):      ${await this.entity('Taxes & fees').innerText()}\n
+            Total Premium:         ${await this.entity('Total Premium').innerText()}\n
         `);
     }
 

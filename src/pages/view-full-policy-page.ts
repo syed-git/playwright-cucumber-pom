@@ -42,7 +42,7 @@ export class ViewFullPolicyPage extends BasePage {
         GlobalData.setCurrentPage('Policy Info');
     }
 
-    async initiatePolicyCancellation(cancellationType: string, autoGraystoneData: any) {
+    async initiatePolicyCancellation(cancellationType: string) {
         console.log('Initiating policy cancellation...');
         await this.cancelButton.click();
         await this.cancellationType(cancellationType).click();
