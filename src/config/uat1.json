@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://personal-auto.netlify.app/",
+    "baseUrl": "http://192.168.100.48:3000/",
     "accountExecutive": {
         "username": "aexec",
         "password": "gw123"

@@ -23,7 +23,7 @@ export class DriversPage extends BasePage {
     protected chooseFile = this.page.locator('input[type=file]');
     protected saveDriverButton = this.page.getByRole('button', { name: 'Save Driver Details' });
     protected nextButton = this.page.getByRole('button', { name: 'Next' });
-    protected pageName = this.page.getByRole('heading', { name: 'Vehicles'});
+    protected pageName = this.page.getByRole('heading', { name: 'Vehicles' });
 
     constructor(page: Page) {
         super(page);
@@ -34,7 +34,7 @@ export class DriversPage extends BasePage {
         console.log(`filling out the ${GlobalData.currentPage()} page....`);
         // Adding drivers details
         await this.fillDriverDetails(autoGraystoneData);
-        console.log(`'${GlobalData.currentPage()} page filled successfully...`);
+        console.log(`${GlobalData.currentPage()} page filled successfully...`);
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
