@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://192.168.100.48:3000/",
+    "baseUrl": "https://personal-auto-policy-center.onrender.com/",
     "accountExecutive": {
         "username": "aexec",
         "password": "gw123"
