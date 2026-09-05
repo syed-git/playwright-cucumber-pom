@@ -24,6 +24,8 @@ jobs:
     name: 2. Build Scenarios (@build)
     runs-on: ubuntu-latest
     needs: code-quality
+    env:
+      HEADLESS: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,6 +49,8 @@ jobs:
     name: 3. Regression Scenarios (@regression)
     runs-on: ubuntu-latest
     needs: build-tests
+    env:
+      HEADLESS: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
