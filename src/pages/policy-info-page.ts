@@ -26,8 +26,8 @@ export class PolicyInfoPage extends BasePage {
     protected saveInsuredButton = this.page.getByRole('button', { name: 'Save Insured Details' });
     protected nextButton = this.page.getByRole('button', { name: 'Next' });
     protected pageName = this.page.getByRole('heading', { name: 'Drivers'});
-    protected numberAndStatus = this.page.locator('//h1[text()="New Submission"]//parent::div');
-
+    protected numberAndStatus = this.page.locator('//p[contains(text(),"Personal Auto")]');
+    
     constructor(page: Page) {
         super(page);
     }

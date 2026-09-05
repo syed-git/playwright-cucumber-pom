@@ -47,7 +47,6 @@ When("user fills out data from {string} to {string} page", async function (this:
 });
 
 When("user navigates from {string} to {string} page", async function (this: CustomWorld, startPage: string, targetPage: string) {
-    const autoGraystoneData = GlobalData.getData();
     const pageNames = Object.keys(pages);
     const targetIndex = pageNames.indexOf(targetPage);
     const prevPage = pageNames[targetIndex - 1];

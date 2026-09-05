@@ -5,7 +5,7 @@ import { expect } from "../support/hooks";
 
 export class PolicySummaryPage extends BasePage {
 
-    protected numberAndStatus = this.page.locator('//h1[text()="New Submission"]//parent::div');
+    protected numberAndStatus = this.page.locator('//p[contains(text(),"Personal Auto")]');
     protected viewPolicy = this.page.getByRole('button', { name: 'View Policy'});
     protected entity = (name: string) => this.page.locator(`//span[text()="${name}"]//following-sibling::span`).last();
     protected totalPremium = this.page.locator(`div[class=amount]`);
