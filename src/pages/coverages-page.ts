@@ -5,10 +5,11 @@ import { GlobalData } from "../support/global-data";
 
 export class CoveragesPage extends BasePage {
 
-    protected coverageCheckbox = (name: string) => this.page.locator(`//strong[text()="${name}"]//parent::td//preceding-sibling::td//input`);
-    protected coverageLimit = (name: string) => this.page.locator(`//strong[text()="${name}"]/parent::td//following-sibling::td//select`);
+    protected coverageCheckbox = (name: string) => this.page.locator(`//span[text()="${name}"]//parent::label//preceding-sibling::input`);
+    protected coverageLimit = (name: string) => this.page.locator(`//span[text()="${name}"]//parent::label//following-sibling::select`);
     protected generaQuote = this.page.getByRole('button', { name: 'Generate Quote' });
     protected quoteSumary = this.page.getByRole('heading', {name: 'Quote Summary'});
+    protected pageName = this.page.getByRole('heading', { name: 'Quote'});
 
     constructor(page: Page) {
         super(page);
@@ -25,14 +26,14 @@ export class CoveragesPage extends BasePage {
         await this.fillCollision(autoGraystoneData);
         await this.fillRentalReimbursement(autoGraystoneData);
         await this.fillRoadSideAssistance(autoGraystoneData);
-        console.log(`'${GlobalData.currentPage()} page filled successfully...`);
+        console.log(`${GlobalData.currentPage()} page filled successfully...`);
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
         await this.fillOutPage(autoGraystoneData);
         await this.generaQuote.click();
         console.log('Navigating to next page...');
-        await expect(this.quoteSumary).toContainText('Quote Summary');
+        await expect(this.pageName).toContainText('Quote');
         GlobalData.setCurrentPage('Quote');
     }
 
@@ -42,7 +43,6 @@ export class CoveragesPage extends BasePage {
 
         if (bodilyInjury) {
             console.log(`selecting Bodily Injury Liability coverage with value: ${bodilyInjury}...`);
-            await this.coverageCheckbox('Bodily Injury Liability').check();
             await this.coverageLimit('Bodily Injury Liability').selectOption(bodilyInjury);
         }
     }
@@ -52,7 +52,6 @@ export class CoveragesPage extends BasePage {
 
         if (propertyDamage) {
             console.log(`selecting Property Damage Liability with value: ${propertyDamage}`);
-            await this.coverageCheckbox('Property Damage Liability').check();
             await this.coverageLimit('Property Damage Liability').selectOption(propertyDamage);
         }
     }
@@ -62,11 +61,11 @@ export class CoveragesPage extends BasePage {
 
         if (uninsuredMotorist) {
             console.log(`selecting uninsured Motorist with value: ${uninsuredMotorist}`);
-            await this.coverageCheckbox('Uninsured Motorist').check();
-            await this.coverageLimit('Uninsured Motorist').selectOption(uninsuredMotorist);
+            await this.coverageCheckbox('Uninsured/Underinsured Motorist').check();
+            await this.coverageLimit('Uninsured/Underinsured Motorist').selectOption(uninsuredMotorist);
         } else {
             console.log(`deselecting uninsured Motorist`);
-            await this.coverageCheckbox('Uninsured Motorist').uncheck();
+            await this.coverageCheckbox('Uninsured/Underinsured Motorist').uncheck();
         }
     }
 
@@ -122,5 +121,8 @@ export class CoveragesPage extends BasePage {
         }
     }
 
+    async clickOnNext() {
+    await this.generaQuote.click();
+    }
     
 }

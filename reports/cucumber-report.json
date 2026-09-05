@@ -4,95 +4,199 @@
     "elements": [
       {
         "description": "",
-        "id": "create-new-policy;create-a-current-dated-new-policy-3-vehicles",
+        "id": "create-new-submission;create-a-current-dated-new-policy-with-2-insured,-3-drivers,-2-vehciles",
         "keyword": "Scenario",
-        "line": 4,
-        "name": "Create a current dated new policy 3 vehicles",
+        "line": 12,
+        "name": "Create a current dated new policy with 2 insured, 3 drivers, 2 vehciles",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2768563700
+              "duration": 1512022100
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 5,
-            "name": "user sets 'numberOfVehicles' to '3'",
+            "line": 13,
+            "name": "user sets 'effectiveDate' to past 200 days",
             "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:30"
             },
             "result": {
               "status": "passed",
-              "duration": 47386399
+              "duration": 13859000
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 6,
+            "line": 14,
             "name": "user requests the graystoneData",
             "match": {
               "location": "src\\step-definitions\\load-data\\load-data.steps.ts:38"
             },
             "result": {
               "status": "passed",
-              "duration": 44390400
+              "duration": 13270499
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 7,
+            "line": 15,
             "name": "'accountExecutive' logs in to policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
             },
             "result": {
               "status": "passed",
-              "duration": 2702731600
+              "duration": 2098810700
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 8,
+            "line": 16,
             "name": "user initiates a new submission",
             "match": {
               "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
             },
             "result": {
               "status": "passed",
-              "duration": 314431199
+              "duration": 251728399
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 9,
-            "name": "user navigates from 'Policy Info' to 'View Full Policy' page",
+            "line": 17,
+            "name": "user fills out data from 'Policy Info' to 'Risk Analysis' page",
             "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:28"
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:40"
             },
             "result": {
               "status": "passed",
-              "duration": 9610526500
+              "duration": 4346935000
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 10,
+            "line": 18,
+            "name": "user fills the 'Risk Analysis' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:58"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 529764600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
             "name": "user logs out from policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
             },
             "result": {
               "status": "passed",
-              "duration": 114490699
+              "duration": 100257800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 20,
+            "name": "'underwriter' logs in to policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 957794500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "user searches the 'submission' number",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1589717000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "user approves all the underwriting issues",
+            "match": {
+              "location": "src\\step-definitions\\uw-approvals-page\\uw-approvals-page.steps.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 475656199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 23,
+            "name": "user logs out from policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 99776900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 24,
+            "name": "'accountExecutive' logs in to policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 906734999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "user searches the 'submission' number",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1586114900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "user navigates from 'Risk Analysis' to 'View Full Policy' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 667998200
             }
           },
           {
@@ -100,32 +204,32 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1008900
+              "duration": 435400
             }
           }
         ],
         "tags": [
           {
             "name": "@NewSubmission",
-            "line": 3
+            "line": 11
           },
           {
-            "name": "@CurrentDate",
-            "line": 3
+            "name": "@BackDatedPolicy",
+            "line": 11
           },
           {
-            "name": "@regression",
-            "line": 3
+            "name": "@build",
+            "line": 11
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "create-new-policy",
+    "id": "create-new-submission",
     "line": 1,
     "keyword": "Feature",
-    "name": "Create new policy",
+    "name": "Create new submission",
     "tags": [],
-    "uri": "src\\features\\regression\\new-submission-regression.feature"
+    "uri": "src\\features\\build\\build-tests.feature"
   }
 ]

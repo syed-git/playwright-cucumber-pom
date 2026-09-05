@@ -5,18 +5,19 @@ import { GlobalData } from "../support/global-data";
 
 export class HomePage extends BasePage {
 
-  protected newSubmissionButton: Locator = this.page.getByRole('link', { name: '+ New Submission' });
-  protected heading: Locator = this.page.locator('//h1[contains(text(), "New Submission — Personal Auto")]');
-  protected pageName = this.page.locator('div[class=panel-header]').first();
+  protected newSubmissionButton: Locator = this.page.getByRole('button', { name: 'New Submission' });
+  protected heading: Locator = this.page.locator('//h1[contains(text(), "New Submission")]');
+  protected pageName = this.page.getByRole('heading', { name: 'Policy Information'});
+  
   constructor(page: Page) {
     super(page);
   }
 
   async clickNewSubmission() {
     console.log('Starting a new submission....');
-    await this.safeClick(this.newSubmissionButton);
+    await this.newSubmissionButton.click();
     await expect(this.heading).toBeVisible();
-    await expect(this.pageName, `page name is not as expected`).toHaveText('Policy Information');
+    await expect(this.pageName, `page name is not as expected`).toBeVisible();
     console.log('New submission started....');
     console.log('user is on the Policy Info Page...');
     GlobalData.setCurrentPage('Policy Info');

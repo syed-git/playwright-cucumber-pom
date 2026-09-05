@@ -5,8 +5,8 @@ import { expect } from "../support/hooks";
 
 export class ReviewPage extends BasePage {
 
-    protected rsikAnalysisButton = this.page.getByRole('button', { name: 'Risk Analysis →'});
-    protected pageName = this.page.locator('div[class=panel-header]').first();
+    protected issuePolicy = this.page.getByRole('button', { name: 'Issue Policy' });
+    protected numberAndStatus = this.page.locator('//h1[text()="New Submission"]//parent::div');
 
     constructor(page: Page) {
         super(page);
@@ -20,10 +20,14 @@ export class ReviewPage extends BasePage {
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
         await this.fillOutPage(autoGraystoneData);
-        await this.safeClick(this.rsikAnalysisButton);
+        await this.safeClick(this.issuePolicy);
         console.log('Navigating to next page...');
-        await expect(this.pageName).toContainText('Risk Analysis');
-        GlobalData.setCurrentPage('Risk Analysis');
+        await expect(this.numberAndStatus).toContainText('In Force');
+        GlobalData.setCurrentPage('Policy Summary');
     }
     
+
+    async clickOnNext() {
+      await this.issuePolicy.click();
+    }
 }

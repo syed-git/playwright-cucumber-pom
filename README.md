@@ -16,7 +16,7 @@ This framework demonstrates:
 - A basic `PageNavigator`
 - ESLint code quality checks (`console.log` is allowed)
 - GitHub Actions CI/CD pipeline with 3 sequential stages
-
+https://wondrous-jelly-b5e5f2.netlify.a
 ## Folder structure
 
 ```text

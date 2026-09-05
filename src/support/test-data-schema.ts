@@ -36,9 +36,9 @@ export const TEST_DATA_SCHEMA = {
     },
   },
   Coverages: {
-    bodilyInjuryLiability: "50,000/100,000",
-    propertyDamageLiability: "50,000",
-    collision: "250",
+    bodilyInjuryLiability: "100k/300k",
+    propertyDamageLiability: "100k",
+    collision: "$500 ded",
   },
 };
 
@@ -320,9 +320,9 @@ function generateVehicleObject(userProvidedData?: Record<string, any>): Record<s
 function generateCoverageObject(userProvidedData?: Record<string, any>): Record<string, any> {
   const result: Record<string, any> = {
     // Mandatory fields with defaults
-    bodilyInjuryLiability: userProvidedData?.bodilyInjuryLiability || "50,000/100,000",
-    propertyDamageLiability: userProvidedData?.propertyDamageLiability || "50,000",
-    collision: userProvidedData?.collision || "250",
+    bodilyInjuryLiability: userProvidedData?.bodilyInjuryLiability || "100k/300k",
+    propertyDamageLiability: userProvidedData?.propertyDamageLiability || "100k",
+    collision: userProvidedData?.collision || "$500 ded",
   };
 
   // Add any other user-provided fields that are not mandatory

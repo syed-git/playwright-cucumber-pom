@@ -5,20 +5,25 @@ import { GlobalData } from "../support/global-data";
 
 export class DriversPage extends BasePage {
 
-    protected addDriver = this.page.getByRole('button', { name: '+ Add Driver' });
-    protected firstName = this.page.locator('//label[text()="First Name *"]//following-sibling::input');
-    protected lastName = this.page.locator('//label[text()="Last Name *"]//following-sibling::input');
-    protected dateOfBirth = this.page.locator('//label[text()="Date of Birth *"]//following-sibling::input');
-    protected gender = this.page.locator('//label[text()="Gender *"]//following-sibling::select');
-    protected licenseNumber = this.page.locator('//label[text()="License Number *"]//following-sibling::input');
-    protected licenseState = this.page.locator('//label[text()="License State *"]//following-sibling::input');
+    protected addDriver = this.page.getByRole('button', { name: 'Add Driver' });
+    protected firstName = this.page.locator('//label[text()="First Name"]//following-sibling::input');
+    protected lastName = this.page.locator('//label[text()="Last Name"]//following-sibling::input');
+    protected dateOfBirth = this.page.locator('//label[text()="Date of Birth"]//following-sibling::input');
+    protected gender: any = {
+      male: this.page.getByLabel('Male', { exact: true }),
+      female: this.page.getByLabel('Female', { exact: true }),
+      other: this.page.getByLabel('Other', { exact: true })
+    }
+    protected licenseNumber = this.page.locator('//label[text()="License Number"]//following-sibling::input');
+    protected licenseState = this.page.locator('//label[text()="License State"]//following-sibling::input');
     protected yearsLicensed = this.page.locator('//label[text()="Years Licensed"]//following-sibling::input');
-    protected accidents = this.page.locator('//label[text()="Accidents (5 yrs)"]//following-sibling::input');
-    protected violations = this.page.locator('//label[text()="Violations (5 yrs)"]//following-sibling::input');
+    protected accidents = this.page.locator('//label[text()="Accidents (past 5 yrs)"]//following-sibling::input');
+    protected violations = this.page.locator('//label[text()="Violations (past 5 yrs)"]//following-sibling::input');
     protected relationshipToInsured = this.page.locator('//label[text()="Relationship to Insured"]//following-sibling::select');
-    protected saveDriverButton = this.page.getByRole('button', { name: 'Save Driver' });
-    protected nextButton = this.page.getByRole('button', { name: 'Next →' });
-    protected pageName = this.page.locator('div[class=panel-header]').first();
+    protected chooseFile = this.page.locator('input[type=file]');
+    protected saveDriverButton = this.page.getByRole('button', { name: 'Save Driver Details' });
+    protected nextButton = this.page.getByRole('button', { name: 'Next' });
+    protected pageName = this.page.getByRole('heading', { name: 'Vehicles' });
 
     constructor(page: Page) {
         super(page);
@@ -29,14 +34,14 @@ export class DriversPage extends BasePage {
         console.log(`filling out the ${GlobalData.currentPage()} page....`);
         // Adding drivers details
         await this.fillDriverDetails(autoGraystoneData);
-        console.log(`'${GlobalData.currentPage()} page filled successfully...`);
+        console.log(`${GlobalData.currentPage()} page filled successfully...`);
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
         await this.fillOutPage(autoGraystoneData);
-        await this.safeClick(this.nextButton);
+        await this.nextButton.click();
         console.log('Navigating to next page...');
-        await expect(this.pageName).toContainText('Vehicles');
+        await expect(this.pageName).toBeVisible();
         GlobalData.setCurrentPage('Vehicles');
     }
 
@@ -47,7 +52,7 @@ export class DriversPage extends BasePage {
 
         for (let i = 1; i <= numberOfDrivers; i++) {
             console.log('Clicking on Add Driver button...');
-            await this.safeClick(this.addDriver);
+            await this.addDriver.click();
             console.log(`Adding Driver ${i} details...`);
 
             // get driver object based on index
@@ -55,37 +60,41 @@ export class DriversPage extends BasePage {
 
             // fill out details
             console.log('Entering first name...');
-            await this.safeFill(this.firstName, driverData.firstName);
+            await this.firstName.fill(driverData.firstName);
             console.log('Entering last name...');
-            await this.safeFill(this.lastName, driverData.lastName);
+            await this.lastName.fill(driverData.lastName);
             console.log('Entering date of birth...');
-            await this.safeFill(this.dateOfBirth, driverData.dateOfBirth);
+            await this.dateOfBirth.fill(driverData.dateOfBirth);
             console.log('selecting gender...');
-            await this.safeSelectOption(this.gender, driverData.gender);
+            await this.gender[driverData.gender.toLowerCase()].click();
             console.log('Entering license number...');
-            await this.safeFill(this.licenseNumber, driverData.licenseNumber);
+            await this.licenseNumber.fill(driverData.licenseNumber);
 
             if (driverData.licenseState) {
                 console.log('Entering license state...');
-                await this.safeFill(this.licenseState, driverData.licenseState);
+                await this.licenseState.fill(driverData.licenseState);
             }
             if (driverData.yearsLicensed) {
                 console.log('Entering years licensed...');
-                await this.safeFill(this.yearsLicensed, driverData.yearsLicensed);
+                await this.yearsLicensed.fill(driverData.yearsLicensed);
             }
             if (driverData.accidents) {
                 console.log('Entering accidents...');
-                await this.safeFill(this.accidents, driverData.accidents);
+                await this.accidents.fill(driverData.accidents);
             }
             if (driverData.violations) {
                 console.log('Entering violations...');
-                await this.safeFill(this.violations, driverData.violations);
+                await this.violations.fill(driverData.violations);
             }
             console.log('selecting the relationshio to insured...');
-            await this.safeSelectOption(this.relationshipToInsured, driverData.relationshipToInsured || 'Insured');
-            await this.safeClick(this.saveDriverButton);
+            await this.relationshipToInsured.selectOption(driverData.relationshipToInsured || 'Insured');
+            await this.saveDriverButton.click();
             console.log(`Driver${i} details saved successfully...`);
         }
         
+    }
+
+    async clickOnNext() {
+      await this.nextButton.click();
     }
 }

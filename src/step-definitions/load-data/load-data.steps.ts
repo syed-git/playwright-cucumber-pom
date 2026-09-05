@@ -28,8 +28,16 @@ Given("user sets {string} to {string}", async function (this: CustomWorld, key: 
 });
 
 Given("user sets {string} to past {int} days", async function (this: CustomWorld, key: string, days: number) {
-  if (key.includes('effectiveDate')) {
+  if (key.includes('effectiveDate') || key.includes('cancellationEffectiveDate')) {
     const value = moment().subtract(days, 'days').format('YYYY-MM-DD');
+    setDeep(this.data, key, value);
+    console.log(`setting ${key} to ${value}`);
+  }
+});
+
+Given("user sets {string} to future {int} days", async function (this: CustomWorld, key: string, days: number) {
+  if (key.includes('effectiveDate') || key.includes('cancellationEffectiveDate')) {
+    const value = moment().add(days, 'days').format('YYYY-MM-DD');
     setDeep(this.data, key, value);
     console.log(`setting ${key} to ${value}`);
   }

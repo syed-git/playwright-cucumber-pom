@@ -5,11 +5,11 @@ import { GlobalData } from "../support/global-data";
 
 export class RsikAnalysisPage extends BasePage {
 
-    protected issuePolicy = this.page.getByRole('button', { name: 'Issue Policy'});
-    protected underwritingIssue = this.page.getByText('This submission must be referred to underwriting. Submit for approval below — you will not be able to issue this policy until the underwriter approves it.')
-    protected submitForUnderwriting = this.page.getByRole('button', { name: 'Submit for UW Approval'});
-    protected awaitingMessage = this.page.getByText('Awaiting underwriter approval. Sign in as an underwriter to approve this submission from the UW Approvals screen.');
-    protected boundMessage = this.page.getByText('has been bound and issued. It is now In Force.');
+    protected nextButton = this.page.getByRole('button', { name: 'Next'});
+    protected underwritingIssue = this.page.getByText('Blocking — underwriter approval required')
+    protected submitForUnderwriting = this.page.getByRole('button', { name: 'Submit for Approval'});
+    protected submittedMessage = this.page.getByText('Submitted for approval — pending underwriter review.');
+    protected pageName = this.page.getByRole('heading', { name: 'Review'});
     
     constructor(page: Page) {
         super(page);
@@ -17,22 +17,27 @@ export class RsikAnalysisPage extends BasePage {
 
     async fillOutPage(_autoGraystoneData: any) {
         // isVisible() returns immediately; give the page a moment to render the issue banner
-        const hasUnderwritingIssue = await this.underwritingIssue
-            .waitFor({ state: "visible", timeout: 5000 })
-            .then(() => true)
-            .catch(() => false);
+        const hasUnderwritingIssue = await this.underwritingIssue.isVisible({ timeout: 5000 }).catch(() => false);
         if (hasUnderwritingIssue) {
+            console.log('Underwriting issue detected, submitting for approval...');
             await this.safeClick(this.submitForUnderwriting);
-            await expect(this.awaitingMessage).toBeVisible();
+            await expect(this.submittedMessage).toBeVisible();
+            console.log('Submitted for approval, waiting for underwriter review...');
+        } else {
+            console.log('No underwriting issue detected, proceeding to next page...');
         }
     }
 
     async fillOutPageAndContinue(autoGraystoneData: any) {
         await this.fillOutPage(autoGraystoneData);
-        await this.safeClick(this.issuePolicy);
+        await this.safeClick(this.nextButton);
         console.log('Navigating to next page...');
-        await expect(this.boundMessage).toBeVisible();
-        GlobalData.setCurrentPage('Policy SUmmary');
+        await expect(this.pageName).toContainText('Review');
+        GlobalData.setCurrentPage('Review');
+    }
+
+    async clickOnNext() {
+      await this.nextButton.click();
     }
     
 }
