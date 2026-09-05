@@ -4,199 +4,238 @@
     "elements": [
       {
         "description": "",
-        "id": "create-new-submission;create-a-current-dated-new-policy-with-2-insured,-3-drivers,-2-vehciles",
+        "id": "underwriting-issues;verify-underwriting-issue-is-created-for-more-than-4-violations",
         "keyword": "Scenario",
-        "line": 12,
-        "name": "Create a current dated new policy with 2 insured, 3 drivers, 2 vehciles",
+        "line": 4,
+        "name": "Verify underwriting issue is created for more than 4 violations",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1512022100
+              "duration": 1479860599
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 13,
-            "name": "user sets 'effectiveDate' to past 200 days",
+            "line": 5,
+            "name": "user sets 'numberOfDrivers' to '2'",
             "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:30"
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
             },
             "result": {
               "status": "passed",
-              "duration": 13859000
+              "duration": 2695100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 6,
+            "name": "user sets 'Drivers.Driver1.accidents' to '6'",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 994200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "user sets 'Drivers.Driver1.violations' to '10'",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1688599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "user sets 'Drivers.Driver1.relationshipToInsured' to 'Spouse'",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3743800
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 14,
+            "line": 9,
             "name": "user requests the graystoneData",
             "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:38"
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:46"
             },
             "result": {
               "status": "passed",
-              "duration": 13270499
+              "duration": 5135000
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 15,
+            "line": 10,
             "name": "'accountExecutive' logs in to policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
             },
             "result": {
               "status": "passed",
-              "duration": 2098810700
+              "duration": 2257383099
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 16,
+            "line": 11,
             "name": "user initiates a new submission",
             "match": {
               "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
             },
             "result": {
               "status": "passed",
-              "duration": 251728399
+              "duration": 635816600
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 17,
+            "line": 12,
             "name": "user fills out data from 'Policy Info' to 'Risk Analysis' page",
             "match": {
               "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:40"
             },
             "result": {
               "status": "passed",
-              "duration": 4346935000
+              "duration": 5925852399
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 18,
+            "line": 13,
             "name": "user fills the 'Risk Analysis' page",
             "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:58"
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:57"
             },
             "result": {
               "status": "passed",
-              "duration": 529764600
+              "duration": 521363100
             }
           },
           {
             "arguments": [],
-            "keyword": "And ",
-            "line": 19,
+            "keyword": "Then ",
+            "line": 14,
             "name": "user logs out from policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
             },
             "result": {
               "status": "passed",
-              "duration": 100257800
+              "duration": 137988499
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 20,
+            "line": 15,
             "name": "'underwriter' logs in to policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
             },
             "result": {
               "status": "passed",
-              "duration": 957794500
+              "duration": 1366227600
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 21,
+            "line": 16,
             "name": "user searches the 'submission' number",
             "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:69"
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:68"
             },
             "result": {
               "status": "passed",
-              "duration": 1589717000
+              "duration": 1872112300
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 22,
+            "line": 17,
             "name": "user approves all the underwriting issues",
             "match": {
               "location": "src\\step-definitions\\uw-approvals-page\\uw-approvals-page.steps.ts:5"
             },
             "result": {
               "status": "passed",
-              "duration": 475656199
+              "duration": 487701000
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 23,
+            "line": 18,
             "name": "user logs out from policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
             },
             "result": {
               "status": "passed",
-              "duration": 99776900
+              "duration": 90425800
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 24,
+            "line": 19,
             "name": "'accountExecutive' logs in to policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
             },
             "result": {
               "status": "passed",
-              "duration": 906734999
+              "duration": 1374681400
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 25,
+            "line": 20,
             "name": "user searches the 'submission' number",
             "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:69"
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:68"
             },
             "result": {
               "status": "passed",
-              "duration": 1586114900
+              "duration": 1570500999
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 26,
+            "line": 21,
             "name": "user navigates from 'Risk Analysis' to 'View Full Policy' page",
             "match": {
               "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:49"
             },
             "result": {
               "status": "passed",
-              "duration": 667998200
+              "duration": 1019822600
             }
           },
           {
@@ -204,32 +243,36 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 435400
+              "duration": 468700
             }
           }
         ],
         "tags": [
           {
             "name": "@NewSubmission",
-            "line": 11
+            "line": 3
           },
           {
-            "name": "@BackDatedPolicy",
-            "line": 11
+            "name": "@UnderwritingIssues",
+            "line": 3
           },
           {
-            "name": "@build",
-            "line": 11
+            "name": "@smoke",
+            "line": 3
+          },
+          {
+            "name": "@Violations",
+            "line": 3
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "create-new-submission",
+    "id": "underwriting-issues",
     "line": 1,
     "keyword": "Feature",
-    "name": "Create new submission",
+    "name": "Underwriting Issues",
     "tags": [],
-    "uri": "src\\features\\build\\build-tests.feature"
+    "uri": "src\\features\\regression\\underwriting-issues\\underwriting-issues.feature"
   }
 ]

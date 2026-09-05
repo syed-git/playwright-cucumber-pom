@@ -118,6 +118,7 @@ export class CoveragesPage extends BasePage {
         if (roadSideAssistance) {
             console.log(`selecting Roadside Assistance with value: ${roadSideAssistance}`);
             await this.coverageCheckbox('Roadside Assistance').check();
+            await this.coverageLimit('Roadside Assistance').selectOption(roadSideAssistance);
         }
     }
 
