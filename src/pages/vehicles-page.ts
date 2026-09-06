@@ -18,7 +18,9 @@ export class VehiclesPage extends BasePage {
     protected saveVehicleButton = this.page.getByRole('button', { name: 'Save Vehicle Details' });
     protected nextButton = this.page.getByRole('button', { name: 'Next' });
     protected pageName = this.page.getByRole('heading', { name: 'Coverages'});
+    protected inputField = (fieldName: string) => this.page.locator(`//label[contains(text(),"${fieldName}")]//following-sibling::input`);
 
+    
     constructor(page: Page) {
         super(page);
     }
