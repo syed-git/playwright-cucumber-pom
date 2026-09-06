@@ -43,6 +43,14 @@ Given("user sets {string} to future {int} days", async function (this: CustomWor
   }
 });
 
+Given("user sets {string} to past {int} years", async function (this: CustomWorld, key: string, years: number) {
+  if (key.includes('effectiveDate') || key.includes('dateOfBirth')) {
+    const value = moment().subtract(years, 'years').format('YYYY-MM-DD');
+    setDeep(this.data, key, value);
+    console.log(`setting ${key} to ${value}`);
+  }
+});
+
 Then("user requests the graystoneData", async function (this: CustomWorld) {
   const testData = mergeWithDefaults(this.data);
   

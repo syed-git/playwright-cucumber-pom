@@ -88,7 +88,6 @@ When("user clicks on {string}", async function (this: CustomWorld, selector: str
 });
 
 When("user expects to see message {string}", async function (this: CustomWorld, message: string) {
-    const navigator = new Navigator(this.page, pageObjectsInOrder);
     expect(this.page.getByText(message)).toBeVisible();
 });
 

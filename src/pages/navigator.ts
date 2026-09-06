@@ -118,7 +118,7 @@ export class Navigator {
     console.log(`Filling field '${selector}' with value '${value}'...`);
     await pageObject.inputField(selector).waitFor({ state: "attached" });
     await pageObject.inputField(selector).fill(value);
-    console
+    console.log('fiedl filled successfulyy....')
   }
 
   async clickField(selector: string, pageObject: any) {

@@ -1,4 +1,4 @@
-Feature: Adding Insured
+Feature: Adding/Removing Insured
 
     @PolicyChange @AddInsured @regression
     Scenario: Verify multiple insured can be added during policy change
@@ -13,7 +13,7 @@ Feature: Adding Insured
         Then user fills out data from 'Policy Info' to 'Drivers' page
         Then user navigates from 'Drivers' to 'View Full Policy' page
         Then user logs out from policy center
-    
+
     @PolicyChange @AddInsured @InsuredOptionalFields @regression
     Scenario: Verify a new insured can be added during policy change with all optional fields
         Then user requests the graystoneData
@@ -50,5 +50,3 @@ Feature: Adding Insured
         And user removes insured 2
         Then user navigates from 'Policy Info' to 'View Full Policy' page
         Then user logs out from policy center
-
-    

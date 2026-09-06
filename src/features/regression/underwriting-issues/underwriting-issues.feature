@@ -57,4 +57,43 @@ Feature: Underwriting Issues
         And user searches the 'submission' number
         Then user navigates from 'Risk Analysis' to 'View Full Policy' page
         And user logs out from policy center
+
+    @NewSubmission @MultipleUnderwritingIssues @regression
+    Scenario: Verify multiple underwriting issue are created back dated policy and more than 4 violations
+        Given user sets 'effectiveDate' to past 100 days
+        Given user sets 'numberOfDrivers' to '2'
+        Given user sets 'Drivers.Driver1.violations' to '8'
+        Then user requests the graystoneData
+        When 'accountExecutive' logs in to policy center
+        When user initiates a new submission
+        Then user fills out data from 'Policy Info' to 'Risk Analysis' page
+        And user fills the 'Risk Analysis' page
+        Then user logs out from policy center
+        When 'underwriter' logs in to policy center
+        And user searches the 'submission' number
+        And user approves all the underwriting issues
+        Then user logs out from policy center
+        When 'accountExecutive' logs in to policy center
+        And user searches the 'submission' number
+        Then user navigates from 'Risk Analysis' to 'View Full Policy' page
+        And user logs out from policy center
+
+    @NewSubmission @UnderwritingIssues @regression
+    Scenario: Verify a underwriting issue is created when driver's age is less than 16
+        Given user sets 'Drivers.Driver1.dateOfBirth' to past 12 years
+        Then user requests the graystoneData
+        When 'accountExecutive' logs in to policy center
+        When user initiates a new submission
+        Then user fills out data from 'Policy Info' to 'Risk Analysis' page
+        And user fills the 'Risk Analysis' page
+        Then user logs out from policy center
+        When 'underwriter' logs in to policy center
+        And user searches the 'submission' number
+        And user approves all the underwriting issues
+        Then user logs out from policy center
+        When 'accountExecutive' logs in to policy center
+        And user searches the 'submission' number
+        Then user navigates from 'Risk Analysis' to 'View Full Policy' page
+        And user logs out from policy center
+    
     

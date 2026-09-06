@@ -2,7 +2,6 @@ import { After, Before, setDefaultTimeout, Status } from "@cucumber/cucumber";
 import { chromium, firefox, webkit } from "@playwright/test";
 import { CustomWorld } from "./world";
 import { expect as baseExpect} from '@playwright/test'
-// import { generateReport } from "../../src/support/report-generator";
 export const expect = baseExpect.configure({timeout: 90000});
 setDefaultTimeout(120 * 1000); // Set default timeout to 60 seconds
 
