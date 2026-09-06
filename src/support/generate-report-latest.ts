@@ -7,6 +7,11 @@
  *   3. Generates an aesthetic, self-contained HTML dashboard with a dynamic
  *      (timestamped) file name under reports/dashboard/.
  *
+ * This file also lives under src/support/, so cucumber-js loads it as support
+ * code in every worker. In that context it patches the console so that every
+ * console.* call made while a step runs is attached to that step and shown in
+ * the dashboard when the step is expanded.
+ *
  * Usage:
  *   npm run test -- --tags "@currentDatePolicy" --parallel 3   (run tests + report)
  *   npm run report:latest                                       (report only, from last run)
@@ -16,6 +21,7 @@ import { spawnSync } from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
+import { After, AfterStep, Before } from "@cucumber/cucumber";
 import type { Page, Locator } from "@playwright/test";
 
 const REPORTS_DIR = path.resolve(process.cwd(), "reports");
@@ -49,6 +55,59 @@ export async function captureScreenshot(
   } catch (err) {
     console.warn(`[captureScreenshot] Failed to capture '${caption}':`, err);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Per-step console capture (active only when loaded by cucumber-js)
+// ---------------------------------------------------------------------------
+
+type ConsoleMethod = "log" | "info" | "warn" | "error" | "debug";
+const CONSOLE_METHODS: ConsoleMethod[] = ["log", "info", "warn", "error", "debug"];
+const consoleBuffer: string[] = [];
+
+function stringifyArg(arg: unknown): string {
+  if (typeof arg === "string") return arg;
+  if (arg instanceof Error) return arg.stack || arg.message;
+  try {
+    return JSON.stringify(arg);
+  } catch {
+    return String(arg);
+  }
+}
+
+function patchConsole(): void {
+  for (const method of CONSOLE_METHODS) {
+    const original = console[method].bind(console);
+    console[method] = (...args: unknown[]) => {
+      const prefix = method === "log" ? "" : `[${method.toUpperCase()}] `;
+      consoleBuffer.push(prefix + args.map(stringifyArg).join(" "));
+      original(...args);
+    };
+  }
+}
+
+function drainConsoleTo(attach: AttachFn | undefined): void {
+  if (!consoleBuffer.length) return;
+  const lines = consoleBuffer.splice(0, consoleBuffer.length);
+  if (!attach) return;
+  try {
+    void attach(`${LOG_ATTACH_PREFIX}${lines.join("\n")}`, { mediaType: "text/plain" });
+  } catch (err) {
+    process.stderr.write(`[generate-report-latest] Failed to attach console output: ${String(err)}\n`);
+  }
+}
+
+function registerConsoleCapture(): void {
+  patchConsole();
+  Before(function (this: { attach: AttachFn }) {
+    consoleBuffer.length = 0;
+  });
+  AfterStep(function (this: { attach: AttachFn }) {
+    drainConsoleTo(this.attach.bind(this));
+  });
+  After(function (this: { attach: AttachFn }) {
+    drainConsoleTo(this.attach.bind(this));
+  });
 }
 
 function platformName(): string {
@@ -156,12 +215,48 @@ const CAPTION_PREFIX = "📷 ";
 
 interface StepImage { src: string; caption: string }
 
-function extractStepLogs(step: Step): { logs: string[]; images: StepImage[]; texts: string[] } {
+interface VisibleStep extends Step {
+  embeddings: Embedding[];
+  hookErrors: string[];
+}
+
+/**
+ * Drop Before/After hook pseudo-steps and fold their attachments into the real
+ * steps: Before-hook attachments go to the first step, After-hook attachments
+ * (e.g. the failure screenshot) go to the failed step, or the last step when
+ * nothing failed. Hook errors are surfaced on the same target step.
+ */
+function foldHooksIntoSteps(steps: Step[]): VisibleStep[] {
+  const visible: VisibleStep[] = steps
+    .filter((s) => !s.hidden)
+    .map((s) => ({ ...s, embeddings: [...(s.embeddings || [])], hookErrors: [] }));
+  if (!visible.length) return visible;
+
+  const failed = visible.find((s) => s.result?.status === "failed");
+  const first = visible[0];
+  const last = visible[visible.length - 1];
+
+  for (const hook of steps) {
+    if (!hook.hidden) continue;
+    const isBefore = (hook.keyword || "").trim().toLowerCase().startsWith("before");
+    const target = failed ?? (isBefore ? first : last);
+    const embeddings = hook.embeddings || [];
+    target.embeddings = isBefore && !failed
+      ? [...embeddings, ...target.embeddings]
+      : [...target.embeddings, ...embeddings];
+    if (hook.result?.error_message) {
+      target.hookErrors.push(`${(hook.keyword || "Hook").trim()} hook failed:\n${hook.result.error_message}`);
+    }
+  }
+  return visible;
+}
+
+function extractStepLogs(step: VisibleStep): { logs: string[]; images: StepImage[]; texts: string[] } {
   const logs: string[] = [];
   const images: StepImage[] = [];
   const texts: string[] = [];
   let pendingCaption: string | null = null;
-  for (const emb of step.embeddings || []) {
+  for (const emb of step.embeddings) {
     const mime = (emb.mime_type || "").toLowerCase();
     if (mime.startsWith("image/")) {
       images.push({
@@ -172,7 +267,7 @@ function extractStepLogs(step: Step): { logs: string[]; images: StepImage[]; tex
     } else if (mime.startsWith("text/") || mime === "") {
       const decoded = Buffer.from(emb.data, "base64").toString("utf-8");
       if (decoded.startsWith(LOG_ATTACH_PREFIX)) {
-        logs.push(decoded.slice(LOG_ATTACH_PREFIX.length));
+        logs.push(...decoded.slice(LOG_ATTACH_PREFIX.length).split("\n"));
       } else if (decoded.startsWith(CAPTION_PREFIX)) {
         pendingCaption = decoded.slice(CAPTION_PREFIX.length).trim();
       } else {
@@ -187,25 +282,35 @@ function extractStepLogs(step: Step): { logs: string[]; images: StepImage[]; tex
 // HTML rendering
 // ---------------------------------------------------------------------------
 
-function renderStep(step: Step): string {
+function renderStepImages(images: StepImage[]): string {
+  if (!images.length) return "";
+  const imgTags = images
+    .map((img) => `<img src="${img.src}" alt="${escapeHtml(img.caption)}" data-caption="${escapeHtml(img.caption)}" loading="lazy"/>`)
+    .join("");
+  if (images.length === 1) {
+    return `<span class="step-shots single" title="${escapeHtml(images[0].caption)}" onclick="event.stopPropagation(); openLightbox(this)">${imgTags}</span>`;
+  }
+  return `<span class="step-shots gallery" title="${images.length} screenshots" onclick="event.stopPropagation(); openLightbox(this)"><span class="gallery-icon">🖼</span><span class="shot-count">${images.length}</span><span class="gallery-store">${imgTags}</span></span>`;
+}
+
+function renderStep(step: VisibleStep): string {
   const status = step.result?.status || "unknown";
   const duration = step.result?.duration ? formatDuration(step.result.duration) : "";
   const { logs, images, texts } = extractStepLogs(step);
-  const name = `${step.keyword || ""}${step.name || (step.hidden ? "(hook)" : "")}`;
+  const name = `${step.keyword || ""}${step.name || ""}`;
 
   const logsHtml = logs.length
-    ? `<div class="step-logs"><div class="logs-title">Console output</div><pre>${escapeHtml(logs.join("\n"))}</pre></div>`
+    ? `<div class="step-logs"><div class="logs-title">Console output (${logs.length} line${logs.length > 1 ? "s" : ""})</div><pre>${escapeHtml(logs.join("\n"))}</pre></div>`
     : "";
   const textsHtml = texts.length
     ? `<div class="step-logs"><div class="logs-title">Attachments</div><pre>${escapeHtml(texts.join("\n"))}</pre></div>`
     : "";
-  const inlineGalleryHtml = images.length
-    ? `<span class="inline-gallery${images.length > 1 ? " multi" : ""}" title="${images.length} screenshot${images.length > 1 ? "s" : ""}" onclick="event.stopPropagation(); openLightbox(this)">${images
-        .map((img, i) => `<img class="inline-thumb${i > 0 ? " extra" : ""}" src="${img.src}" alt="${escapeHtml(img.caption)}" data-caption="${escapeHtml(img.caption)}" loading="lazy"/>`)
-        .join("")}${images.length > 1 ? `<span class="shot-count">+${images.length - 1}</span>` : ""}</span>`
-    : "";
-  const errorHtml = step.result?.error_message
-    ? `<div class="step-error"><div class="logs-title">Error</div><pre>${escapeHtml(step.result.error_message)}</pre></div>`
+  const errors = [
+    ...(step.result?.error_message ? [step.result.error_message] : []),
+    ...step.hookErrors,
+  ];
+  const errorHtml = errors.length
+    ? `<div class="step-error"><div class="logs-title">Error</div><pre>${escapeHtml(errors.join("\n\n"))}</pre></div>`
     : "";
 
   const hasDetails = logsHtml || textsHtml || errorHtml;
@@ -215,8 +320,10 @@ function renderStep(step: Step): string {
       <div class="step-header${hasDetails ? " expandable" : ""}" ${hasDetails ? 'onclick="this.parentElement.classList.toggle(\'open\')"' : ""}>
         <span class="step-status ${status}">${statusIcon(status)}</span>
         <span class="step-name">${escapeHtml(name)}</span>
+        ${renderStepImages(images)}
+        <span class="step-spacer"></span>
+        ${logs.length ? `<span class="log-count" title="${logs.length} console line${logs.length > 1 ? "s" : ""}">💻 ${logs.length}</span>` : ""}
         ${hasDetails ? '<span class="chevron">▾</span>' : ""}
-        ${inlineGalleryHtml}
         <span class="step-duration">${duration}</span>
       </div>
       ${hasDetails ? `<div class="step-details">${errorHtml}${logsHtml}${textsHtml}</div>` : ""}
@@ -227,7 +334,7 @@ function renderScenario(scenario: Scenario, index: number): string {
   const status = scenarioStatus(scenario);
   const totalNanos = (scenario.steps || []).reduce((acc, s) => acc + (s.result?.duration || 0), 0);
   const tags = (scenario.tags || []).map((t) => `<span class="tag">${escapeHtml(t.name)}</span>`).join("");
-  const stepsHtml = (scenario.steps || []).map(renderStep).join("");
+  const stepsHtml = foldHooksIntoSteps(scenario.steps || []).map(renderStep).join("");
 
   return `
     <div class="scenario ${status}" data-status="${status}">
@@ -358,8 +465,10 @@ function buildHtml(features: Feature[]): string {
   .step-status.passed { color: var(--green); }
   .step-status.failed { color: var(--red); }
   .step-status.skipped { color: var(--amber); }
-  .step-name { flex: 1; }
+  .step-name { min-width: 0; }
+  .step-spacer { flex: 1; }
   .step.failed .step-name { color: var(--red); }
+  .log-count { color: var(--muted); font-size: 11px; white-space: nowrap; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; }
   .step-duration { color: var(--muted); font-size: 12px; white-space: nowrap; }
   .step .chevron { font-size: 12px; }
   .step.open > .step-header .chevron { transform: rotate(180deg); }
@@ -369,11 +478,13 @@ function buildHtml(features: Feature[]): string {
   .step-logs pre, .step-error pre { background: #0b101c; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12.5px; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; word-break: break-word; color: #b9c4da; font-family: 'Cascadia Code', Consolas, monospace; }
   .step-error pre { border-color: rgba(248,113,113,.4); color: #fca5a5; }
   .step-logs, .step-error { margin-bottom: 10px; }
-  .inline-gallery { position: relative; display: inline-flex; align-items: center; cursor: zoom-in; flex-shrink: 0; }
-  .inline-thumb { width: 48px; height: 30px; object-fit: cover; object-position: top; border: 1px solid var(--border); border-radius: 5px; display: block; transition: transform .15s, border-color .15s; background: #fff; }
-  .inline-gallery:hover .inline-thumb { transform: scale(1.08); border-color: var(--blue); }
-  .inline-thumb.extra { display: none; }
-  .inline-gallery.multi .inline-thumb:first-child { box-shadow: 3px 3px 0 -1px var(--surface2), 3px 3px 0 0 var(--border); }
+  .step-shots { position: relative; display: inline-flex; align-items: center; cursor: zoom-in; flex-shrink: 0; margin-left: 4px; }
+  .step-shots.single img { width: 48px; height: 30px; object-fit: cover; object-position: top; border: 1px solid var(--border); border-radius: 5px; display: block; transition: transform .15s, border-color .15s; background: #fff; }
+  .step-shots.single:hover img { transform: scale(1.08); border-color: var(--blue); }
+  .step-shots.gallery { width: 48px; height: 30px; justify-content: center; border: 1px solid var(--border); border-radius: 5px; background: var(--surface2); transition: transform .15s, border-color .15s; }
+  .step-shots.gallery:hover { transform: scale(1.08); border-color: var(--blue); }
+  .gallery-icon { font-size: 16px; line-height: 1; }
+  .gallery-store { display: none; }
   .shot-count { position: absolute; right: -7px; top: -7px; background: var(--blue); color: #0b1020; font-size: 10px; font-weight: 700; border-radius: 999px; padding: 1px 5px; pointer-events: none; }
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(5,8,16,.92); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; }
   .lightbox.open { display: flex; }
@@ -382,6 +493,10 @@ function buildHtml(features: Feature[]): string {
   .lightbox.hide-caption .lb-caption { display: none; }
   .lightbox .lb-bar { position: absolute; top: 18px; right: 20px; display: flex; gap: 10px; }
   .lightbox .lb-counter { position: absolute; top: 24px; left: 24px; color: var(--muted); font-size: 13px; }
+  .lightbox .lb-strip { display: flex; gap: 8px; margin-top: 12px; max-width: 92vw; overflow-x: auto; padding: 4px; }
+  .lightbox .lb-strip img { width: 72px; height: 45px; object-fit: cover; object-position: top; border-radius: 6px; border: 2px solid transparent; cursor: pointer; opacity: .55; background: #fff; }
+  .lightbox .lb-strip img.active { border-color: var(--blue); opacity: 1; }
+  .lightbox .lb-strip img:hover { opacity: 1; }
   .lightbox button { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; }
   .lightbox button:hover { border-color: var(--blue); }
   .lightbox .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 20px; padding: 12px 16px; border-radius: 50%; }
@@ -447,6 +562,7 @@ function buildHtml(features: Feature[]): string {
     <img id="lbImage" src="" alt=""/>
     <button class="lb-nav lb-next" id="lbNext" onclick="navLightbox(1)">›</button>
     <div class="lb-caption" id="lbCaption"></div>
+    <div class="lb-strip" id="lbStrip"></div>
   </div>
 
   <script>
@@ -458,6 +574,17 @@ function buildHtml(features: Feature[]): string {
         return { src: img.src, caption: img.getAttribute('data-caption') || '' };
       });
       lbIndex = 0;
+      var strip = document.getElementById('lbStrip');
+      strip.innerHTML = '';
+      if (lbGroup.length > 1) {
+        lbGroup.forEach(function (item, i) {
+          var t = document.createElement('img');
+          t.src = item.src;
+          t.title = item.caption;
+          t.addEventListener('click', function (e) { e.stopPropagation(); lbIndex = i; renderLightbox(); });
+          strip.appendChild(t);
+        });
+      }
       renderLightbox();
       document.getElementById('lightbox').classList.add('open');
     }
@@ -469,6 +596,10 @@ function buildHtml(features: Feature[]): string {
       var multi = lbGroup.length > 1;
       document.getElementById('lbPrev').style.display = multi ? '' : 'none';
       document.getElementById('lbNext').style.display = multi ? '' : 'none';
+      var thumbs = document.getElementById('lbStrip').children;
+      for (var i = 0; i < thumbs.length; i++) {
+        thumbs[i].classList.toggle('active', i === lbIndex);
+      }
     }
     function navLightbox(dir) {
       lbIndex = (lbIndex + dir + lbGroup.length) % lbGroup.length;
@@ -596,4 +727,7 @@ function main(): void {
 
 if (require.main === module) {
   main();
+} else {
+  // Loaded by cucumber-js as support code (src/support/**/*.ts).
+  registerConsoleCapture();
 }
