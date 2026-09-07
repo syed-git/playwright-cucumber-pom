@@ -11,6 +11,7 @@ import { ReviewPage } from "../../pages/review-page"
 import { RsikAnalysisPage } from "../../pages/risk-analysis-page";
 import { PolicySummaryPage } from "../../pages/policy-summary-page";
 import { ViewFullPolicyPage } from "../../pages/view-full-policy-page";
+import { expect } from "../../support/hooks";
 
 const pages: any = {
   "Policy Info": PolicyInfoPage,
@@ -69,4 +70,26 @@ When("user searches the {string} number", async function (this: CustomWorld, tra
     const navigator = new Navigator(this.page, pageObjectsInOrder);
     await navigator.searchTransaction(transaction);
 });
+
+When("user fills {string} with {string}", async function (this: CustomWorld, selector: string, value: string) {
+    const navigator = new Navigator(this.page, pageObjectsInOrder);
+    const currentPageName = GlobalData.currentPage();
+    const PageClass = pages[currentPageName];
+    const pageObject = new PageClass(this.page);
+    await navigator.fillField(selector, value, pageObject);
+});
+
+When("user clicks on {string}", async function (this: CustomWorld, selector: string) {
+    const navigator = new Navigator(this.page, pageObjectsInOrder);
+    const currentPageName = GlobalData.currentPage();
+    const PageClass = pages[currentPageName];
+    const pageObject = new PageClass(this.page);
+    await navigator.clickField(selector, pageObject);
+});
+
+When("user expects to see message {string}", async function (this: CustomWorld, message: string) {
+    expect(this.page.getByText(message)).toBeVisible();
+});
+
+
 

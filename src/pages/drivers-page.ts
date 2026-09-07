@@ -24,6 +24,8 @@ export class DriversPage extends BasePage {
     protected saveDriverButton = this.page.getByRole('button', { name: 'Save Driver Details' });
     protected nextButton = this.page.getByRole('button', { name: 'Next' });
     protected pageName = this.page.getByRole('heading', { name: 'Vehicles' });
+    protected inputField = (fieldName: string) => this.page.locator(`//label[contains(text(),"${fieldName}")]//following-sibling::input`);
+    protected deleteDriverButton = this.page.locator(`//button[contains(@class,"btn btn-ghost danger")]`);
 
     constructor(page: Page) {
         super(page);
@@ -96,5 +98,11 @@ export class DriversPage extends BasePage {
 
     async clickOnNext() {
       await this.nextButton.click();
+    }
+
+    async removeDriver(driverIndex: number) {
+        console.log(`Removing Insured${driverIndex}...`);
+        await this.deleteDriverButton.nth(driverIndex - 1).click();
+        console.log(`Insured${driverIndex} removed successfully...`);
     }
 }

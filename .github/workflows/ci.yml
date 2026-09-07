@@ -7,7 +7,7 @@ on:
 
 jobs:
   code-quality:
-    name: 1. Code Quality (ESLint)
+    name: 1. code checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
         run: npm run lint
 
   build-tests:
-    name: 2. Build Scenarios (@build)
+    name: 2. build tests
     runs-on: ubuntu-latest
     needs: code-quality
     env:
@@ -45,8 +45,8 @@ jobs:
           name: build-report
           path: reports/dashboard/
 
-  regression-tests:
-    name: 3. Regression Scenarios (@regression)
+  smoke-tests:
+    name: 3. smoke tests
     runs-on: ubuntu-latest
     needs: build-tests
     env:
@@ -61,11 +61,11 @@ jobs:
         run: npm ci
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
-      - name: Run @regression scenarios
-        run: npm run test -- --tags "@regression"
+      - name: Run @smoke scenarios
+        run: npm run test -- --tags "@smoke"
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: regression-report
+          name: smoke-report
           path: reports/dashboard/

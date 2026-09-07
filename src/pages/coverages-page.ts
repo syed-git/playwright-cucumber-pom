@@ -10,6 +10,9 @@ export class CoveragesPage extends BasePage {
     protected generaQuote = this.page.getByRole('button', { name: 'Generate Quote' });
     protected quoteSumary = this.page.getByRole('heading', {name: 'Quote Summary'});
     protected pageName = this.page.getByRole('heading', { name: 'Quote'});
+    protected allCoverage = this.page.locator('//div[@class="quote-line"]//span[1]');
+    protected allCoveragesAmount = this.page.locator('//div[@class="quote-line"]//span[2]');
+    protected totalPremium = this.page.locator('//span[text()="Total Premium"]//following-sibling::span');
 
     constructor(page: Page) {
         super(page);
@@ -118,11 +121,29 @@ export class CoveragesPage extends BasePage {
         if (roadSideAssistance) {
             console.log(`selecting Roadside Assistance with value: ${roadSideAssistance}`);
             await this.coverageCheckbox('Roadside Assistance').check();
+            await this.coverageLimit('Roadside Assistance').selectOption(roadSideAssistance);
         }
     }
 
     async clickOnNext() {
-    await this.generaQuote.click();
+        await this.generaQuote.click();
     }
-    
+
+    async verifyTotalPremium () {
+        console.log('verifying the total premium as individual coverages');
+        let expectedTotalPremium: number = 0;
+        const actualTotalPremium = parseFloat((await this.totalPremium.innerText()).replace(/[$,]/g, ''));
+        const count = await this.allCoveragesAmount.count();
+
+        for (let i = 0; i < count; i++) {
+            const coverage = await this.allCoverage.nth(i).innerText();
+            const text = await this.allCoveragesAmount.nth(i).innerText();
+            console.log(`Coverage: ${coverage}   Amount: ${text}`);
+            // remove $ sign and ,
+            expectedTotalPremium = expectedTotalPremium + parseFloat(text.replace('$',''));
+        } 
+        console.log(`expected total premium   = ${Number(expectedTotalPremium)}\nactual total premium = ${actualTotalPremium}`);
+        expect(expectedTotalPremium).toEqual(actualTotalPremium);
+        console.log('Actual and Expected premium validated successfully...')
+    }
 }

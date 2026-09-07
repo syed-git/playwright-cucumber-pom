@@ -6,7 +6,7 @@ import { GlobalData } from "../support/global-data";
 export class RsikAnalysisPage extends BasePage {
 
     protected nextButton = this.page.getByRole('button', { name: 'Next'});
-    protected underwritingIssue = this.page.getByText('Blocking — underwriter approval required')
+    protected underwritingIssue = this.page.getByText('Blocking — underwriter approval required').first()
     protected submitForUnderwriting = this.page.getByRole('button', { name: 'Submit for Approval'});
     protected submittedMessage = this.page.getByText('Submitted for approval — pending underwriter review.');
     protected pageName = this.page.getByRole('heading', { name: 'Review'});

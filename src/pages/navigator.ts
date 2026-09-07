@@ -114,4 +114,18 @@ export class Navigator {
     await expect(this.page.getByText(transactionNumber)).toBeVisible();
   }
 
+  async fillField(selector: string, value: string, pageObject: any) {
+    console.log(`Filling field '${selector}' with value '${value}'...`);
+    await pageObject.inputField(selector).waitFor({ state: "attached" });
+    await pageObject.inputField(selector).fill(value);
+    console.log('fiedl filled successfulyy....')
+  }
+
+  async clickField(selector: string, pageObject: any) {
+    console.log(`Clicking on field '${selector}'...`);
+    await pageObject[selector].waitFor({ state: "attached" });
+    await pageObject[selector].click();
+    console.log(`Clicked on field '${selector}' successfully...`);
+  }
+
 }

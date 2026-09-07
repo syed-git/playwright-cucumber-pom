@@ -27,7 +27,9 @@ export class PolicyInfoPage extends BasePage {
     protected nextButton = this.page.getByRole('button', { name: 'Next' });
     protected pageName = this.page.getByRole('heading', { name: 'Drivers'});
     protected numberAndStatus = this.page.locator('//p[contains(text(),"Personal Auto")]');
-    
+    protected deleteInsuredButton = this.page.locator(`//button[contains(@class,"btn btn-ghost danger")]`);
+    protected inputField = (fieldName: string) => this.page.locator(`//label[contains(text(),"${fieldName}")]//following-sibling::input`);
+
     constructor(page: Page) {
         super(page);
     }
@@ -120,6 +122,12 @@ export class PolicyInfoPage extends BasePage {
       const text = await this.numberAndStatus.innerText();
       const submissionNumber = text.match(/PA-\d+/)?.[0];
       GlobalData.setSubmissionNumber(submissionNumber || '');
+    }
+
+    async removeInsured(insuredIndex: number) {
+      console.log(`Removing Insured${insuredIndex}...`);
+      await this.deleteInsuredButton.nth(insuredIndex - 1).click();
+      console.log(`Insured${insuredIndex} removed successfully...`);
     }
 
 }
