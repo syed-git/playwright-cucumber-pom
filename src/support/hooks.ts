@@ -10,7 +10,7 @@ Before(async function (this: CustomWorld) {
   this.data = {};
   const environment = process.env.ENV || "uat1";
   const isHeadless = process.env.HEADLESS ? process.env.HEADLESS.toLowerCase() === "true" : false;
-  const supportedBrowsers = ["chromium", "firefox", "webkit"];
+  const supportedBrowsers = ["chromium", "firefox", "webkit", "edge"];
   const browserType = supportedBrowsers.includes(process.env.BROWSER || "") ? (process.env.BROWSER as string) : "chromium";
 
   switch (browserType) {
@@ -22,6 +22,9 @@ Before(async function (this: CustomWorld) {
       break;
     case "webkit":
       this.browser = await webkit.launch({ headless: isHeadless });
+      break;
+    case "edge":
+      this.browser = await chromium.launch({ channel: 'msedge', headless: isHeadless});
       break;
     default:
       throw new Error(`Unsupported browser type: ${browserType}`);
