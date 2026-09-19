@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  automation:
-    name: playwright-automation-tests
+  tests-chromium:
+    name: playwright-tests-chromium
     runs-on: ubuntu-latest
     env:
       HEADLESS: true
@@ -24,8 +24,83 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-      - name: Run all automation tests
+        run: npx playwright install
+      - name: Run all tests in chromium
+        run: npm run test
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: reports/dashboard/
+        
+  tests-msedge:
+    name: playwright-tests-msedge
+    runs-on: ubuntu-latest
+    env:
+      HEADLESS: true
+      BROWSER: 'edge'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Run all tests in msedge
+        run: npm run test
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: reports/dashboard/
+
+  tests-webkit:
+    name: playwright-tests-webkit
+    runs-on: ubuntu-latest
+    env:
+      HEADLESS: true
+      BROWSER: 'webkit'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Run all tests in webkit
+        run: npm run test
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: reports/dashboard/
+
+  tests-firefox:
+    name: playwright-tests-firefox
+    runs-on: ubuntu-latest
+    env:
+      HEADLESS: true
+      BROWSER: 'firefox'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install
+      - name: Run all tests firefox
         run: npm run test
       - name: Upload report
         if: always()
