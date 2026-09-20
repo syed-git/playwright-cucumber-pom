@@ -34,21 +34,7 @@ Before(async function (this: CustomWorld) {
     ignoreHTTPSErrors: true,
     viewport: { width: 1080, height: 720 },
   });
-  // Floating overlays (e.g. the Netlify badge iframe) sit on top of the page and
-  // intercept pointer events after Playwright auto-scrolls an element into view.
-  // Disable pointer events on them so clicks on scrolled-to elements succeed.
-  await this.context.addInitScript(() => {
-    const injectStyle = () => {
-      const style = document.createElement("style");
-      style.textContent = "#nl-badge-frame, #nl-badge, [id^='nl-badge'] { display: none !important; pointer-events: none !important; }";
-      (document.head || document.documentElement).appendChild(style);
-    };
-    if (document.documentElement) {
-      injectStyle();
-    } else {
-      document.addEventListener("DOMContentLoaded", injectStyle);
-    }
-  });
+
   this.page = await this.context.newPage();
   this.environment = environment;
   console.log(`Browser started for environment: ${environment}, headless: ${isHeadless}, browser: ${browserType}`);

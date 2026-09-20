@@ -4,238 +4,128 @@
     "elements": [
       {
         "description": "",
-        "id": "underwriting-issues;verify-underwriting-issue-is-created-for-more-than-4-violations",
+        "id": "create-new-submission;create-a-current-dated-new-policy",
         "keyword": "Scenario",
         "line": 4,
-        "name": "Verify underwriting issue is created for more than 4 violations",
+        "name": "Create a current dated new policy",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1479860599
+              "duration": 2852100
             }
           },
           {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 5,
-            "name": "user sets 'numberOfDrivers' to '2'",
-            "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
-            },
+            "keyword": "Before",
+            "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 2695100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 6,
-            "name": "user sets 'Drivers.Driver1.accidents' to '6'",
-            "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 994200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 7,
-            "name": "user sets 'Drivers.Driver1.violations' to '10'",
-            "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1688599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "user sets 'Drivers.Driver1.relationshipToInsured' to 'Spouse'",
-            "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:25"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 3743800
+              "duration": 3194127700
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 9,
+            "line": 5,
             "name": "user requests the graystoneData",
             "match": {
-              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:46"
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:54"
             },
             "result": {
               "status": "passed",
-              "duration": 5135000
-            }
+              "duration": 35497399
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fQnJvd3NlciBzdGFydGVkIGZvciBlbnZpcm9ubWVudDogdWF0MSwgaGVhZGxlc3M6IGZhbHNlLCBicm93c2VyOiBjaHJvbWl1bQpEYXRhIHJlcXVlc3RlZCB7CiAgImVmZmVjdGl2ZURhdGUiOiAiMjAyNi0wOS0xOSIsCiAgIm51bWJlck9mSW5zdXJlZCI6ICIxIiwKICAibnVtYmVyT2ZEcml2ZXJzIjogIjEiLAogICJudW1iZXJPZlZlaGljbGVzIjogIjEiLAogICJJbnN1cmVkIjogewogICAgIk5hbWVkSW5zdXJlZDEiOiB7CiAgICAgICJmaXJzdE5hbWUiOiAiUm9iZXJ0IiwKICAgICAgImxhc3ROYW1lIjogIkVtaWx5IiwKICAgICAgImdlbmRlciI6ICJGZW1hbGUiLAogICAgICAiZGF0ZU9mQmlydGgiOiAiMTk2Ni0xMi0yMCIsCiAgICAgICJpc1ByaW1hcnlJbnN1cmVkIjogdHJ1ZQogICAgfQogIH0sCiAgIkRyaXZlcnMiOiB7CiAgICAiRHJpdmVyMSI6IHsKICAgICAgImZpcnN0TmFtZSI6ICJFbWlseSIsCiAgICAgICJsYXN0TmFtZSI6ICJTYXJhaCIsCiAgICAgICJnZW5kZXIiOiAiRmVtYWxlIiwKICAgICAgImRhdGVPZkJpcnRoIjogIjE5NjAtMDYtMDgiLAogICAgICAibGljZW5zZU51bWJlciI6ICI0NTY0MzkyMTg2IgogICAgfQogIH0sCiAgIlZlaGljbGVzIjogewogICAgIlZlaGljbGUxIjogewogICAgICAieWVhciI6ICIyMDE1IiwKICAgICAgIm1ha2UiOiAiSG9uZGEiLAogICAgICAibW9kZWwiOiAiSG9uZGEiLAogICAgICAidmluIjogIlZJTjNBTVpLQzcyUDJSWiIsCiAgICAgICJvd25lcnNoaXAiOiAiUmVudGVkIgogICAgfQogIH0sCiAgIkNvdmVyYWdlcyI6IHsKICAgICJib2RpbHlJbmp1cnlMaWFiaWxpdHkiOiAiMTAway8zMDBrIiwKICAgICJwcm9wZXJ0eURhbWFnZUxpYWJpbGl0eSI6ICIxMDBrIiwKICAgICJjb2xsaXNpb24iOiAiJDUwMCBkZWQiCiAgfQp9",
+                "mime_type": "text/plain"
+              }
+            ]
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 10,
+            "line": 6,
             "name": "'accountExecutive' logs in to policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
             },
             "result": {
               "status": "passed",
-              "duration": 2257383099
-            }
+              "duration": 23653061199
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBpbiB3aXRoIHVybDogaHR0cHM6Ly9wZXJzb25hbC1hdXRvLXBvbGljeS1jZW50ZXIub25yZW5kZXIuY29tLywgdXNlcm5hbWU6IGFleGVjCkZpbGxpbmcgdXNlcm5hbWUgYW5kIHBhc3N3b3JkLi4uCkNsaWNraW5nIG9uIGxvZ2luIGJ1dHRvbi4uLgpXYWl0aW5nIGZvciB0aGUgcGFnZSB0byBsb2FkLi4uCkxvZ2luIHN1Y2Nlc3NmdWwgZm9yIHVzZXI6IGFleGVj",
+                "mime_type": "text/plain"
+              }
+            ]
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 11,
+            "line": 7,
             "name": "user initiates a new submission",
             "match": {
               "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
             },
             "result": {
               "status": "passed",
-              "duration": 635816600
-            }
+              "duration": 483124798
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fU3RhcnRpbmcgYSBuZXcgc3VibWlzc2lvbi4uLi4KTmV3IHN1Ym1pc3Npb24gc3RhcnRlZC4uLi4KdXNlciBpcyBvbiB0aGUgUG9saWN5IEluZm8gUGFnZS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 12,
-            "name": "user fills out data from 'Policy Info' to 'Risk Analysis' page",
+            "line": 8,
+            "name": "user fills out data from 'Policy Info' to 'View Full Policy' page",
             "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:40"
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:41"
             },
             "result": {
               "status": "passed",
-              "duration": 5925852399
-            }
+              "duration": 7438734000
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fZmlsbGluZyBvdXQgdGhlIFBvbGljeSBJbmZvIHBhZ2UuLi4uCkVudGVyaW5nIGVmZmVjdGl2ZSBkYXRlLi4uLgpBZGRpbmcgSW5zdXJlZDEgZGV0YWlscy4uLgpDbGlja2luZyBvbiBBZGQgSW5zdXJlZCBidXR0b24uLi4KRW50ZXJpbmcgZmlyc3QgbmFtZS4uLgpFbnRlcmluZyBsYXN0IG5hbWUuLi4KRW50ZXJpbmcgZGF0ZSBvZiBiaXJ0aC4uLgpzZWxlY3RpbmcgdGhlIGdlbmRlci4uLi4Kc2VsZWN0aW5nIGlzIHByaW1hcnkgaW51c3JlZCBvcHRpb24uLi4KSW5zdXJlZDEgZGV0YWlscyBzYXZlZCBzdWNjZXNzZnVsbHkuLi4uCidQb2xpY3kgSW5mbyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiB0aGUgRHJpdmVycyBwYWdlLi4uLgpmaWxsaW5nIG91dCB0aGUgRHJpdmVycyBwYWdlLi4uLgpDbGlja2luZyBvbiBBZGQgRHJpdmVyIGJ1dHRvbi4uLgpBZGRpbmcgRHJpdmVyIDEgZGV0YWlscy4uLgpFbnRlcmluZyBmaXJzdCBuYW1lLi4uCkVudGVyaW5nIGxhc3QgbmFtZS4uLgpFbnRlcmluZyBkYXRlIG9mIGJpcnRoLi4uCnNlbGVjdGluZyBnZW5kZXIuLi4KRW50ZXJpbmcgbGljZW5zZSBudW1iZXIuLi4Kc2VsZWN0aW5nIHRoZSByZWxhdGlvbnNoaW8gdG8gaW5zdXJlZC4uLgpEcml2ZXIxIGRldGFpbHMgc2F2ZWQgc3VjY2Vzc2Z1bGx5Li4uCkRyaXZlcnMgcGFnZSBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4uCmZpbGxpbmcgb3V0IHRoZSBWZWhpY2xlcyBwYWdlLi4uLgpjbGlja2luZyBvbiBBZGQgVmVoaWNsZSBidXR0b24uLi4KQWRkaW5nIFZlaGljbGUgMSBkZXRhaWxzLi4uCkVudGVyaW5nIHllYXIuLi4KRW50ZXJpbmcgbWFrZS4uLgpFbnRlcmluZyBtb2RlbC4uLgpFbnRlcmluZyB2aW4uLi4Kc2VsZWN0aW5nIG93bmVyc2hpcC4uLgp2ZWhpY2xlMSBkZXRhaWxzIHNhdmVkIHN1Y2Nlc3NmdWxseS4uLgpWZWhpY2xlcyBwYWdlIGZpbGxlZCBvdXQgc3VjY2Vzc2Z1bGx5Li4uCidWZWhpY2xlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWFndGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiBDb3ZlcmFnZXMgcGFnZS4uLgpmaWxsaW5nIG91dCBDb3ZlcmFnZXMgcGFnZS4uLgpzZWxlY3RpbmcgQm9kaWx5IEluanVyeSBMaWFiaWxpdHkgY292ZXJhZ2Ugd2l0aCB2YWx1ZTogMTAway8zMDBrLi4uCnNlbGVjdGluZyBQcm9wZXJ0eSBEYW1hZ2UgTGlhYmlsaXR5IHdpdGggdmFsdWU6IDEwMGsKZGVzZWxlY3RpbmcgdW5pbnN1cmVkIE1vdG9yaXN0CmRlc2VsZWN0aW5nIENvbXByZWhlbnNpdmUgY292ZXJhZ2UKc2VsZWN0aW5nIGNvbGxpc29uIHdpdGggdmFsdWU6ICQ1MDAgZGVkCkNvdmVyYWdlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KUG9saWN5IHF1b3RlZCBzdWNjZXNzZnVsbHkuLi4KUG9saWN5IFN1bW1hcnkuLi4KCgogICAgICAgICAgICBQT0xJQ1kgRUZGRUNUSVZFIERBVEU6IDIwMjYtMDktMTkKCiAgICAgICAgICAgIERSSVZFUlM6ICAgICAgICAgICAgICAgJDAuMDAKCiAgICAgICAgICAgIFZFSElDTEVTOiAgICAgICAgICAgICAgJDQwMC4wMAoKICAgICAgICAgICAgU3VidG90YWw6ICAgICAgICAgICAgICAkMSwwOTAuMDAKCiAgICAgICAgICAgIFRheGVzICYgZmVlICg2JSk6ICAgICAgJDY1LjQwCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgICAgICAgICQxLDE1NS40MAoKICAgICAgICAKTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KTm8gdW5kZXJ3cml0aW5nIGlzc3VlIGRldGVjdGVkLCBwcm9jZWVkaW5nIHRvIG5leHQgcGFnZS4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpmaWxsaW5nIG91dCB0aGUgUmV2aWV3Li4uClJldmlldyBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpQb2xpY3kgU3VtbWFyeToKCiAgICAgICAgICAgIFBPTElDWSAjOiAgICAgICBQQS0xMDAwMDAxCgogICAgICAgICAgICBTVEFUVVM6ICAgICAgICAgSW4gRm9yY2UKCiAgICAgICAgICAgIEVGRkVDVElWRSBEQVRFOiBTZXAgMTksIDIwMjYKCiAgICAgICAgICAgIEVYUElSQVRJT046ICAgICBTZXAgMTksIDIwMjcKCiAgICAgICAgICAgIFRFUk06ICAgICAgICAgICAxMiBtb250aHMKCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgJDEsMTU1LjQwCiAgICAgICAgCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 13,
-            "name": "user fills the 'Risk Analysis' page",
-            "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:57"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 521363100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 14,
+            "line": 9,
             "name": "user logs out from policy center",
             "match": {
               "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
             },
             "result": {
               "status": "passed",
-              "duration": 137988499
-            }
+              "duration": 233628200
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBvdXQgZnJvbSBwb2xpY3kgY2VudGVyLi4uCkxvZ291dCBzdWNjZXNzZnVsLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
           },
           {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 15,
-            "name": "'underwriter' logs in to policy center",
-            "match": {
-              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
-            },
+            "keyword": "After",
+            "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1366227600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 16,
-            "name": "user searches the 'submission' number",
-            "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:68"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1872112300
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 17,
-            "name": "user approves all the underwriting issues",
-            "match": {
-              "location": "src\\step-definitions\\uw-approvals-page\\uw-approvals-page.steps.ts:5"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 487701000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 18,
-            "name": "user logs out from policy center",
-            "match": {
-              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 90425800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 19,
-            "name": "'accountExecutive' logs in to policy center",
-            "match": {
-              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1374681400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 20,
-            "name": "user searches the 'submission' number",
-            "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:68"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1570500999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 21,
-            "name": "user navigates from 'Risk Analysis' to 'View Full Policy' page",
-            "match": {
-              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:49"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1019822600
+              "duration": 840133199
             }
           },
           {
@@ -243,7 +133,7 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 468700
+              "duration": 134399
             }
           }
         ],
@@ -253,26 +143,420 @@
             "line": 3
           },
           {
-            "name": "@UnderwritingIssues",
+            "name": "@build",
             "line": 3
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "create-new-submission;verify-policy-change-functionality",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Verify policy change functionality",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 99399
+            }
           },
           {
-            "name": "@smoke",
-            "line": 3
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1280395199
+            }
           },
           {
-            "name": "@Violations",
-            "line": 3
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "user requests the graystoneData",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:54"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9244799
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fQnJvd3NlciBzdGFydGVkIGZvciBlbnZpcm9ubWVudDogdWF0MSwgaGVhZGxlc3M6IGZhbHNlLCBicm93c2VyOiBjaHJvbWl1bQpEYXRhIHJlcXVlc3RlZCB7CiAgImVmZmVjdGl2ZURhdGUiOiAiMjAyNi0wOS0xOSIsCiAgIm51bWJlck9mSW5zdXJlZCI6ICIxIiwKICAibnVtYmVyT2ZEcml2ZXJzIjogIjEiLAogICJudW1iZXJPZlZlaGljbGVzIjogIjEiLAogICJJbnN1cmVkIjogewogICAgIk5hbWVkSW5zdXJlZDEiOiB7CiAgICAgICJmaXJzdE5hbWUiOiAiU2FyYWgiLAogICAgICAibGFzdE5hbWUiOiAiUm9iZXJ0IiwKICAgICAgImdlbmRlciI6ICJGZW1hbGUiLAogICAgICAiZGF0ZU9mQmlydGgiOiAiMTk2MC0xMi0yNCIsCiAgICAgICJpc1ByaW1hcnlJbnN1cmVkIjogdHJ1ZQogICAgfQogIH0sCiAgIkRyaXZlcnMiOiB7CiAgICAiRHJpdmVyMSI6IHsKICAgICAgImZpcnN0TmFtZSI6ICJSb2JlcnQiLAogICAgICAibGFzdE5hbWUiOiAiU2FyYWgiLAogICAgICAiZ2VuZGVyIjogIkZlbWFsZSIsCiAgICAgICJkYXRlT2ZCaXJ0aCI6ICIxOTkzLTEyLTI0IiwKICAgICAgImxpY2Vuc2VOdW1iZXIiOiAiOTE5NjE5NjQzNCIKICAgIH0KICB9LAogICJWZWhpY2xlcyI6IHsKICAgICJWZWhpY2xlMSI6IHsKICAgICAgInllYXIiOiAiMjAxOCIsCiAgICAgICJtYWtlIjogIlRveW90YSIsCiAgICAgICJtb2RlbCI6ICJUb3lvdGEiLAogICAgICAidmluIjogIlZJTkNROFk0NVJZRFo3SSIsCiAgICAgICJvd25lcnNoaXAiOiAiUmVudGVkIgogICAgfQogIH0sCiAgIkNvdmVyYWdlcyI6IHsKICAgICJib2RpbHlJbmp1cnlMaWFiaWxpdHkiOiAiMTAway8zMDBrIiwKICAgICJwcm9wZXJ0eURhbWFnZUxpYWJpbGl0eSI6ICIxMDBrIiwKICAgICJjb2xsaXNpb24iOiAiJDUwMCBkZWQiCiAgfQp9",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "'accountExecutive' logs in to policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2016067900
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBpbiB3aXRoIHVybDogaHR0cHM6Ly9wZXJzb25hbC1hdXRvLXBvbGljeS1jZW50ZXIub25yZW5kZXIuY29tLywgdXNlcm5hbWU6IGFleGVjCkZpbGxpbmcgdXNlcm5hbWUgYW5kIHBhc3N3b3JkLi4uCkNsaWNraW5nIG9uIGxvZ2luIGJ1dHRvbi4uLgpXYWl0aW5nIGZvciB0aGUgcGFnZSB0byBsb2FkLi4uCkxvZ2luIHN1Y2Nlc3NmdWwgZm9yIHVzZXI6IGFleGVj",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 15,
+            "name": "user initiates a new submission",
+            "match": {
+              "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 477250900
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fU3RhcnRpbmcgYSBuZXcgc3VibWlzc2lvbi4uLi4KTmV3IHN1Ym1pc3Npb24gc3RhcnRlZC4uLi4KdXNlciBpcyBvbiB0aGUgUG9saWN5IEluZm8gUGFnZS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 16,
+            "name": "user fills out data from 'Policy Info' to 'View Full Policy' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:41"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6641778999
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fZmlsbGluZyBvdXQgdGhlIFBvbGljeSBJbmZvIHBhZ2UuLi4uCkVudGVyaW5nIGVmZmVjdGl2ZSBkYXRlLi4uLgpBZGRpbmcgSW5zdXJlZDEgZGV0YWlscy4uLgpDbGlja2luZyBvbiBBZGQgSW5zdXJlZCBidXR0b24uLi4KRW50ZXJpbmcgZmlyc3QgbmFtZS4uLgpFbnRlcmluZyBsYXN0IG5hbWUuLi4KRW50ZXJpbmcgZGF0ZSBvZiBiaXJ0aC4uLgpzZWxlY3RpbmcgdGhlIGdlbmRlci4uLi4Kc2VsZWN0aW5nIGlzIHByaW1hcnkgaW51c3JlZCBvcHRpb24uLi4KSW5zdXJlZDEgZGV0YWlscyBzYXZlZCBzdWNjZXNzZnVsbHkuLi4uCidQb2xpY3kgSW5mbyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiB0aGUgRHJpdmVycyBwYWdlLi4uLgpmaWxsaW5nIG91dCB0aGUgRHJpdmVycyBwYWdlLi4uLgpDbGlja2luZyBvbiBBZGQgRHJpdmVyIGJ1dHRvbi4uLgpBZGRpbmcgRHJpdmVyIDEgZGV0YWlscy4uLgpFbnRlcmluZyBmaXJzdCBuYW1lLi4uCkVudGVyaW5nIGxhc3QgbmFtZS4uLgpFbnRlcmluZyBkYXRlIG9mIGJpcnRoLi4uCnNlbGVjdGluZyBnZW5kZXIuLi4KRW50ZXJpbmcgbGljZW5zZSBudW1iZXIuLi4Kc2VsZWN0aW5nIHRoZSByZWxhdGlvbnNoaW8gdG8gaW5zdXJlZC4uLgpEcml2ZXIxIGRldGFpbHMgc2F2ZWQgc3VjY2Vzc2Z1bGx5Li4uCkRyaXZlcnMgcGFnZSBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4uCmZpbGxpbmcgb3V0IHRoZSBWZWhpY2xlcyBwYWdlLi4uLgpjbGlja2luZyBvbiBBZGQgVmVoaWNsZSBidXR0b24uLi4KQWRkaW5nIFZlaGljbGUgMSBkZXRhaWxzLi4uCkVudGVyaW5nIHllYXIuLi4KRW50ZXJpbmcgbWFrZS4uLgpFbnRlcmluZyBtb2RlbC4uLgpFbnRlcmluZyB2aW4uLi4Kc2VsZWN0aW5nIG93bmVyc2hpcC4uLgp2ZWhpY2xlMSBkZXRhaWxzIHNhdmVkIHN1Y2Nlc3NmdWxseS4uLgpWZWhpY2xlcyBwYWdlIGZpbGxlZCBvdXQgc3VjY2Vzc2Z1bGx5Li4uCidWZWhpY2xlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWFndGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiBDb3ZlcmFnZXMgcGFnZS4uLgpmaWxsaW5nIG91dCBDb3ZlcmFnZXMgcGFnZS4uLgpzZWxlY3RpbmcgQm9kaWx5IEluanVyeSBMaWFiaWxpdHkgY292ZXJhZ2Ugd2l0aCB2YWx1ZTogMTAway8zMDBrLi4uCnNlbGVjdGluZyBQcm9wZXJ0eSBEYW1hZ2UgTGlhYmlsaXR5IHdpdGggdmFsdWU6IDEwMGsKZGVzZWxlY3RpbmcgdW5pbnN1cmVkIE1vdG9yaXN0CmRlc2VsZWN0aW5nIENvbXByZWhlbnNpdmUgY292ZXJhZ2UKc2VsZWN0aW5nIGNvbGxpc29uIHdpdGggdmFsdWU6ICQ1MDAgZGVkCkNvdmVyYWdlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KUG9saWN5IHF1b3RlZCBzdWNjZXNzZnVsbHkuLi4KUG9saWN5IFN1bW1hcnkuLi4KCgogICAgICAgICAgICBQT0xJQ1kgRUZGRUNUSVZFIERBVEU6IDIwMjYtMDktMTkKCiAgICAgICAgICAgIERSSVZFUlM6ICAgICAgICAgICAgICAgJDAuMDAKCiAgICAgICAgICAgIFZFSElDTEVTOiAgICAgICAgICAgICAgJDQ3NS4wMAoKICAgICAgICAgICAgU3VidG90YWw6ICAgICAgICAgICAgICAkMSwxNjUuMDAKCiAgICAgICAgICAgIFRheGVzICYgZmVlICg2JSk6ICAgICAgJDY5LjkwCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgICAgICAgICQxLDIzNC45MAoKICAgICAgICAKTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KTm8gdW5kZXJ3cml0aW5nIGlzc3VlIGRldGVjdGVkLCBwcm9jZWVkaW5nIHRvIG5leHQgcGFnZS4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpmaWxsaW5nIG91dCB0aGUgUmV2aWV3Li4uClJldmlldyBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpQb2xpY3kgU3VtbWFyeToKCiAgICAgICAgICAgIFBPTElDWSAjOiAgICAgICBQQS0xMDAwMDAyCgogICAgICAgICAgICBTVEFUVVM6ICAgICAgICAgSW4gRm9yY2UKCiAgICAgICAgICAgIEVGRkVDVElWRSBEQVRFOiBTZXAgMTksIDIwMjYKCiAgICAgICAgICAgIEVYUElSQVRJT046ICAgICBTZXAgMTksIDIwMjcKCiAgICAgICAgICAgIFRFUk06ICAgICAgICAgICAxMiBtb250aHMKCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgJDEsMjM0LjkwCiAgICAgICAgCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 17,
+            "name": "user sets 'effectiveDate' to future 5 days",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:38"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78125599
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fc2V0dGluZyBlZmZlY3RpdmVEYXRlIHRvIDIwMjYtMDktMjQ=",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "user requests the graystoneData",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:54"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28683099
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fRGF0YSByZXF1ZXN0ZWQgewogICJlZmZlY3RpdmVEYXRlIjogIjIwMjYtMDktMjQiLAogICJudW1iZXJPZkluc3VyZWQiOiAiMSIsCiAgIm51bWJlck9mRHJpdmVycyI6ICIxIiwKICAibnVtYmVyT2ZWZWhpY2xlcyI6ICIxIiwKICAiSW5zdXJlZCI6IHsKICAgICJOYW1lZEluc3VyZWQxIjogewogICAgICAiZmlyc3ROYW1lIjogIlNhcmFoIiwKICAgICAgImxhc3ROYW1lIjogIk1pY2hhZWwiLAogICAgICAiZ2VuZGVyIjogIk1hbGUiLAogICAgICAiZGF0ZU9mQmlydGgiOiAiMTk5My0wMS0xOCIsCiAgICAgICJpc1ByaW1hcnlJbnN1cmVkIjogdHJ1ZQogICAgfQogIH0sCiAgIkRyaXZlcnMiOiB7CiAgICAiRHJpdmVyMSI6IHsKICAgICAgImZpcnN0TmFtZSI6ICJTYXJhaCIsCiAgICAgICJsYXN0TmFtZSI6ICJKb2huIiwKICAgICAgImdlbmRlciI6ICJNYWxlIiwKICAgICAgImRhdGVPZkJpcnRoIjogIjIwMDctMDItMjIiLAogICAgICAibGljZW5zZU51bWJlciI6ICI2MzYyODY5MDY2IgogICAgfQogIH0sCiAgIlZlaGljbGVzIjogewogICAgIlZlaGljbGUxIjogewogICAgICAieWVhciI6ICIyMDE1IiwKICAgICAgIm1ha2UiOiAiRm9yZCIsCiAgICAgICJtb2RlbCI6ICJIb25kYSIsCiAgICAgICJ2aW4iOiAiVklOWjBSUkU5TVBCMTlIIiwKICAgICAgIm93bmVyc2hpcCI6ICJPd25lZCIKICAgIH0KICB9LAogICJDb3ZlcmFnZXMiOiB7CiAgICAiYm9kaWx5SW5qdXJ5TGlhYmlsaXR5IjogIjEwMGsvMzAwayIsCiAgICAicHJvcGVydHlEYW1hZ2VMaWFiaWxpdHkiOiAiMTAwayIsCiAgICAiY29sbGlzaW9uIjogIiQ1MDAgZGVkIgogIH0KfQ==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "user initiates the policy change",
+            "match": {
+              "location": "src\\step-definitions\\view-full-policy\\view-full-policy.steps.ts:6"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 777283999
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fSW5pdGlhdGluZyBwb2xpY3kgY2hhbmdlLi4uClBvbGljeSBjaGFuZ2UgaW5pdGlhdGVkIHN1Y2Nlc3NmdWxseS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "user navigates from 'Policy Info' to 'View Full Policy' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:50"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1854886798
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 21,
+            "name": "user logs out from policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 245500499
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBvdXQgZnJvbSBwb2xpY3kgY2VudGVyLi4uCkxvZ291dCBzdWNjZXNzZnVsLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1240144800
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 59500
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@PolicyChange",
+            "line": 11
+          },
+          {
+            "name": "@build",
+            "line": 11
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "create-new-submission;verify-policy-cancel-functionality",
+        "keyword": "Scenario",
+        "line": 24,
+        "name": "Verify policy cancel functionality",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 59999
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1195904600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 25,
+            "name": "user requests the graystoneData",
+            "match": {
+              "location": "src\\step-definitions\\load-data\\load-data.steps.ts:54"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1414299
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fQnJvd3NlciBzdGFydGVkIGZvciBlbnZpcm9ubWVudDogdWF0MSwgaGVhZGxlc3M6IGZhbHNlLCBicm93c2VyOiBjaHJvbWl1bQpEYXRhIHJlcXVlc3RlZCB7CiAgImVmZmVjdGl2ZURhdGUiOiAiMjAyNi0wOS0xOSIsCiAgIm51bWJlck9mSW5zdXJlZCI6ICIxIiwKICAibnVtYmVyT2ZEcml2ZXJzIjogIjEiLAogICJudW1iZXJPZlZlaGljbGVzIjogIjEiLAogICJJbnN1cmVkIjogewogICAgIk5hbWVkSW5zdXJlZDEiOiB7CiAgICAgICJmaXJzdE5hbWUiOiAiTWljaGFlbCIsCiAgICAgICJsYXN0TmFtZSI6ICJKYW5lIiwKICAgICAgImdlbmRlciI6ICJNYWxlIiwKICAgICAgImRhdGVPZkJpcnRoIjogIjE5NjYtMDYtMDgiLAogICAgICAiaXNQcmltYXJ5SW5zdXJlZCI6IHRydWUKICAgIH0KICB9LAogICJEcml2ZXJzIjogewogICAgIkRyaXZlcjEiOiB7CiAgICAgICJmaXJzdE5hbWUiOiAiSm9obiIsCiAgICAgICJsYXN0TmFtZSI6ICJFbWlseSIsCiAgICAgICJnZW5kZXIiOiAiTWFsZSIsCiAgICAgICJkYXRlT2ZCaXJ0aCI6ICIyMDAwLTA2LTAyIiwKICAgICAgImxpY2Vuc2VOdW1iZXIiOiAiMTQzMjkxNDQzMCIKICAgIH0KICB9LAogICJWZWhpY2xlcyI6IHsKICAgICJWZWhpY2xlMSI6IHsKICAgICAgInllYXIiOiAiMjAyMSIsCiAgICAgICJtYWtlIjogIkZvcmQiLAogICAgICAibW9kZWwiOiAiVG95b3RhIiwKICAgICAgInZpbiI6ICJWSU5FNVVCSDNIWjZIVTEiLAogICAgICAib3duZXJzaGlwIjogIkxlYXNlZCIKICAgIH0KICB9LAogICJDb3ZlcmFnZXMiOiB7CiAgICAiYm9kaWx5SW5qdXJ5TGlhYmlsaXR5IjogIjEwMGsvMzAwayIsCiAgICAicHJvcGVydHlEYW1hZ2VMaWFiaWxpdHkiOiAiMTAwayIsCiAgICAiY29sbGlzaW9uIjogIiQ1MDAgZGVkIgogIH0KfQ==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 26,
+            "name": "'accountExecutive' logs in to policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2081695499
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBpbiB3aXRoIHVybDogaHR0cHM6Ly9wZXJzb25hbC1hdXRvLXBvbGljeS1jZW50ZXIub25yZW5kZXIuY29tLywgdXNlcm5hbWU6IGFleGVjCkZpbGxpbmcgdXNlcm5hbWUgYW5kIHBhc3N3b3JkLi4uCkNsaWNraW5nIG9uIGxvZ2luIGJ1dHRvbi4uLgpXYWl0aW5nIGZvciB0aGUgcGFnZSB0byBsb2FkLi4uCkxvZ2luIHN1Y2Nlc3NmdWwgZm9yIHVzZXI6IGFleGVj",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 27,
+            "name": "user initiates a new submission",
+            "match": {
+              "location": "src\\step-definitions\\home-page\\home-page.steps.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 418203999
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fU3RhcnRpbmcgYSBuZXcgc3VibWlzc2lvbi4uLi4KTmV3IHN1Ym1pc3Npb24gc3RhcnRlZC4uLi4KdXNlciBpcyBvbiB0aGUgUG9saWN5IEluZm8gUGFnZS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 28,
+            "name": "user fills out data from 'Policy Info' to 'View Full Policy' page",
+            "match": {
+              "location": "src\\step-definitions\\navigations\\common-pages.steps.ts:41"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6150906799
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fZmlsbGluZyBvdXQgdGhlIFBvbGljeSBJbmZvIHBhZ2UuLi4uCkVudGVyaW5nIGVmZmVjdGl2ZSBkYXRlLi4uLgpBZGRpbmcgSW5zdXJlZDEgZGV0YWlscy4uLgpDbGlja2luZyBvbiBBZGQgSW5zdXJlZCBidXR0b24uLi4KRW50ZXJpbmcgZmlyc3QgbmFtZS4uLgpFbnRlcmluZyBsYXN0IG5hbWUuLi4KRW50ZXJpbmcgZGF0ZSBvZiBiaXJ0aC4uLgpzZWxlY3RpbmcgdGhlIGdlbmRlci4uLi4Kc2VsZWN0aW5nIGlzIHByaW1hcnkgaW51c3JlZCBvcHRpb24uLi4KSW5zdXJlZDEgZGV0YWlscyBzYXZlZCBzdWNjZXNzZnVsbHkuLi4uCidQb2xpY3kgSW5mbyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiB0aGUgRHJpdmVycyBwYWdlLi4uLgpmaWxsaW5nIG91dCB0aGUgRHJpdmVycyBwYWdlLi4uLgpDbGlja2luZyBvbiBBZGQgRHJpdmVyIGJ1dHRvbi4uLgpBZGRpbmcgRHJpdmVyIDEgZGV0YWlscy4uLgpFbnRlcmluZyBmaXJzdCBuYW1lLi4uCkVudGVyaW5nIGxhc3QgbmFtZS4uLgpFbnRlcmluZyBkYXRlIG9mIGJpcnRoLi4uCnNlbGVjdGluZyBnZW5kZXIuLi4KRW50ZXJpbmcgbGljZW5zZSBudW1iZXIuLi4Kc2VsZWN0aW5nIHRoZSByZWxhdGlvbnNoaW8gdG8gaW5zdXJlZC4uLgpEcml2ZXIxIGRldGFpbHMgc2F2ZWQgc3VjY2Vzc2Z1bGx5Li4uCkRyaXZlcnMgcGFnZSBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4uCmZpbGxpbmcgb3V0IHRoZSBWZWhpY2xlcyBwYWdlLi4uLgpjbGlja2luZyBvbiBBZGQgVmVoaWNsZSBidXR0b24uLi4KQWRkaW5nIFZlaGljbGUgMSBkZXRhaWxzLi4uCkVudGVyaW5nIHllYXIuLi4KRW50ZXJpbmcgbWFrZS4uLgpFbnRlcmluZyBtb2RlbC4uLgpFbnRlcmluZyB2aW4uLi4Kc2VsZWN0aW5nIG93bmVyc2hpcC4uLgp2ZWhpY2xlMSBkZXRhaWxzIHNhdmVkIHN1Y2Nlc3NmdWxseS4uLgpWZWhpY2xlcyBwYWdlIGZpbGxlZCBvdXQgc3VjY2Vzc2Z1bGx5Li4uCidWZWhpY2xlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KbmF2aWFndGluZyB0byBuZXh0IHBhZ2UuLi4KdXNlciBpcyBvbiBDb3ZlcmFnZXMgcGFnZS4uLgpmaWxsaW5nIG91dCBDb3ZlcmFnZXMgcGFnZS4uLgpzZWxlY3RpbmcgQm9kaWx5IEluanVyeSBMaWFiaWxpdHkgY292ZXJhZ2Ugd2l0aCB2YWx1ZTogMTAway8zMDBrLi4uCnNlbGVjdGluZyBQcm9wZXJ0eSBEYW1hZ2UgTGlhYmlsaXR5IHdpdGggdmFsdWU6IDEwMGsKZGVzZWxlY3RpbmcgdW5pbnN1cmVkIE1vdG9yaXN0CmRlc2VsZWN0aW5nIENvbXByZWhlbnNpdmUgY292ZXJhZ2UKc2VsZWN0aW5nIGNvbGxpc29uIHdpdGggdmFsdWU6ICQ1MDAgZGVkCkNvdmVyYWdlcyBwYWdlIGZpbGxlZCBzdWNjZXNzZnVsbHkuLi4KTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KUG9saWN5IHF1b3RlZCBzdWNjZXNzZnVsbHkuLi4KUG9saWN5IFN1bW1hcnkuLi4KCgogICAgICAgICAgICBQT0xJQ1kgRUZGRUNUSVZFIERBVEU6IDIwMjYtMDktMTkKCiAgICAgICAgICAgIERSSVZFUlM6ICAgICAgICAgICAgICAgJDAuMDAKCiAgICAgICAgICAgIFZFSElDTEVTOiAgICAgICAgICAgICAgJDQ3NS4wMAoKICAgICAgICAgICAgU3VidG90YWw6ICAgICAgICAgICAgICAkMSwxNjUuMDAKCiAgICAgICAgICAgIFRheGVzICYgZmVlICg2JSk6ICAgICAgJDY5LjkwCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgICAgICAgICQxLDIzNC45MAoKICAgICAgICAKTmF2aWdhdGluZyB0byBuZXh0IHBhZ2UuLi4KTm8gdW5kZXJ3cml0aW5nIGlzc3VlIGRldGVjdGVkLCBwcm9jZWVkaW5nIHRvIG5leHQgcGFnZS4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpmaWxsaW5nIG91dCB0aGUgUmV2aWV3Li4uClJldmlldyBmaWxsZWQgc3VjY2Vzc2Z1bGx5Li4uLgpOYXZpZ2F0aW5nIHRvIG5leHQgcGFnZS4uLgpQb2xpY3kgU3VtbWFyeToKCiAgICAgICAgICAgIFBPTElDWSAjOiAgICAgICBQQS0xMDAwMDAzCgogICAgICAgICAgICBTVEFUVVM6ICAgICAgICAgSW4gRm9yY2UKCiAgICAgICAgICAgIEVGRkVDVElWRSBEQVRFOiBTZXAgMTksIDIwMjYKCiAgICAgICAgICAgIEVYUElSQVRJT046ICAgICBTZXAgMTksIDIwMjcKCiAgICAgICAgICAgIFRFUk06ICAgICAgICAgICAxMiBtb250aHMKCgogICAgICAgICAgICBUb3RhbCBQcmVtaXVtOiAgJDEsMjM0LjkwCiAgICAgICAgCk5hdmlnYXRpbmcgdG8gbmV4dCBwYWdlLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 29,
+            "name": "user initiates 'Flat' policy cancellation",
+            "match": {
+              "location": "src\\step-definitions\\view-full-policy\\view-full-policy.steps.ts:12"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1196753098
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fSW5pdGlhdGluZyBwb2xpY3kgY2FuY2VsbGF0aW9uLi4uClBvbGljeSBjYW5jZWxsYXRpb24gaW5pdGlhdGVkIHN1Y2Nlc3NmdWxseS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 30,
+            "name": "user reinstate the policy",
+            "match": {
+              "location": "src\\step-definitions\\view-full-policy\\view-full-policy.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 333258400
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fUmVpbnN0YXRpbmcgcG9saWN5Li4uClBvbGljeSByZWluc3RhdGVkIHN1Y2Nlc3NmdWxseS4uLg==",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 31,
+            "name": "user logs out from policy center",
+            "match": {
+              "location": "src\\step-definitions\\login-page\\login-page.steps.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 133379798
+            },
+            "embeddings": [
+              {
+                "data": "8J+Su19fQ09OU09MRV9fTG9nZ2luZyBvdXQgZnJvbSBwb2xpY3kgY2VudGVyLi4uCkxvZ291dCBzdWNjZXNzZnVsLi4u",
+                "mime_type": "text/plain"
+              }
+            ]
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 815580999
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 52900
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@CancelPolicy",
+            "line": 23
+          },
+          {
+            "name": "@build",
+            "line": 23
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "underwriting-issues",
+    "id": "create-new-submission",
     "line": 1,
     "keyword": "Feature",
-    "name": "Underwriting Issues",
+    "name": "Create new submission",
     "tags": [],
-    "uri": "src\\features\\regression\\underwriting-issues\\underwriting-issues.feature"
+    "uri": "src\\features\\build\\build-tests.feature"
   }
 ]
